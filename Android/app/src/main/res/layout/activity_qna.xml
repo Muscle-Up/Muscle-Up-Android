@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".qna.view.QnaActivity"
+        android:background="#F5F6F8"
+        >
+
+    <TextView
+            android:id="@+id/qna_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="QnA 게시판"
+            android:textSize="22sp"
+            app:layout_constraintEnd_toStartOf="@+id/qna_gl_right"
+            app:layout_constraintStart_toStartOf="@+id/qna_gl_left"
+            app:layout_constraintTop_toTopOf="@+id/qna_gl_top" />
+
+    <EditText
+            android:id="@+id/search_qna_et"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:background="@color/colorGray"
+            android:drawableStart="@drawable/ic_search"
+            android:drawablePadding="8dp"
+            android:hint="검색할 공지 제목을 입력하세요."
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:padding="8dp"
+            android:textColorHint="@color/colorBlack"
+            android:textSize="14sp"
+            android:maxLines="1"
+            app:layout_constraintBottom_toTopOf="@+id/qna_top_line"
+            app:layout_constraintEnd_toStartOf="@+id/qna_gl_right" />
+
+    <View
+            android:id="@+id/qna_top_line"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="65dp"
+            app:layout_constraintEnd_toStartOf="@+id/qna_gl_right"
+            app:layout_constraintStart_toStartOf="@+id/qna_gl_left"
+            app:layout_constraintTop_toBottomOf="@+id/qna_tv" />
+
+    <TextView
+            android:id="@+id/qna_number_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            app:layout_constraintBottom_toTopOf="@+id/qna_bottom_line"
+            app:layout_constraintStart_toStartOf="@+id/qna_gl_left"
+            app:layout_constraintTop_toBottomOf="@+id/qna_top_line" />
+
+    <View
+            android:id="@+id/qna_bottom_line"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="42dp"
+            app:layout_constraintEnd_toStartOf="@+id/qna_gl_right"
+            app:layout_constraintStart_toStartOf="@+id/qna_gl_left"
+            app:layout_constraintTop_toBottomOf="@+id/qna_top_line" />
+
+    <TextView
+            android:id="@+id/qna_title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="18dp"
+            app:layout_constraintBottom_toTopOf="@+id/qna_bottom_line"
+            app:layout_constraintStart_toEndOf="@+id/qna_number_tv"
+            app:layout_constraintTop_toBottomOf="@+id/qna_top_line" />
+
+    <TextView
+            android:id="@+id/qna_date_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="38dp"
+            app:layout_constraintBottom_toTopOf="@+id/qna_bottom_line"
+            app:layout_constraintEnd_toStartOf="@+id/qna_view_tv"
+            app:layout_constraintTop_toBottomOf="@+id/qna_top_line" />
+
+    <TextView
+            android:id="@+id/qna_view_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="4dp"
+            app:layout_constraintBottom_toTopOf="@+id/qna_bottom_line"
+            app:layout_constraintEnd_toStartOf="@+id/qna_gl_right"
+            app:layout_constraintTop_toBottomOf="@+id/qna_top_line" />
+
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/qna_rv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toStartOf="@+id/qna_gl_right"
+            app:layout_constraintStart_toStartOf="@+id/qna_gl_left"
+            app:layout_constraintTop_toBottomOf="@+id/qna_bottom_line" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/qna_page_layout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/qna_gl_right"
+            app:layout_constraintStart_toStartOf="@+id/qna_gl_left"
+            app:layout_constraintTop_toTopOf="@+id/qna_gl_bottom">
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/qna_page_rv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/qna_next_page_btn"
+                app:layout_constraintStart_toEndOf="@+id/qna_previous_page_btn"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+                android:id="@+id/qna_previous_page_btn"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/ic_previous_page"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/qna_page_rv"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+                android:id="@+id/qna_next_page_btn"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/ic_next_page"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/qna_page_rv"
+                app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/qna_gl_bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.9" />
+
+    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/qna_gl_top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.06" />
+
+    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/qna_gl_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.05" />
+
+    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/qna_gl_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.95" />
+
+    <Button
+            android:id="@+id/qna_btn"
+            android:layout_width="70dp"
+            android:layout_height="31dp"
+            android:background="@drawable/border_gray"
+            android:text="작성하기"
+            app:layout_constraintBottom_toTopOf="@+id/qna_gl_bottom"
+            app:layout_constraintEnd_toStartOf="@+id/qna_gl_right" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

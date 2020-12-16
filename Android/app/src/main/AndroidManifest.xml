@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
         package="com.example.muscleup">
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
             android:allowBackup="true"
@@ -17,9 +18,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".FindPasswordActivity" />
-        <activity android:name=".SignUpActivity" />
-        <activity android:name=".SignUpActivity2" />
-        <activity android:name=".SignUpActivity3" />
+        <activity android:name=".signup.SignUpActivity" />
+        <activity android:name=".signup.SignUpActivity2" />
+        <activity android:name=".signup.SignUpActivity4" />
         <activity android:name=".qna.view.QnaActivity" />
         <activity android:name=".LoginActivity">
 

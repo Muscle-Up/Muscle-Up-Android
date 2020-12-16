@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#F5F6F8"
+        tools:context=".ui.graph.GraphActivity">
+
+        <ImageButton
+            android:id="@+id/graph_btn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="27dp"
+            android:background="@drawable/back_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/nanumsquareeb"
+            android:text="그래프"
+            android:textColor="@android:color/black"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@id/graph_btn_back"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/graph_btn_back" />
+
+        <Spinner
+            android:id="@+id/graph_spinner"
+            android:layout_width="70dp"
+            android:layout_height="30dp"
+            android:background="#E4E4E4"
+            android:popupBackground="@android:color/white"
+            android:popupElevation="6dp"
+            android:theme="@style/SpinnerTheme"
+            app:layout_constraintRight_toRightOf="@id/graph_gl3"
+            app:layout_constraintTop_toBottomOf="@id/graph_btn_back" />
+
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/graph"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/radius"
+            android:elevation="6dp"
+            app:layout_constraintBottom_toTopOf="@id/graph_gl1"
+            app:layout_constraintLeft_toLeftOf="@id/graph_gl2"
+            app:layout_constraintRight_toRightOf="@id/graph_gl3"
+            app:layout_constraintTop_toBottomOf="@id/graph_spinner" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@android:color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/graph_gl1">
+
+            <View
+                android:layout_width="2dp"
+                android:layout_height="10dp"
+                android:layout_marginEnd="10dp"
+                android:background="#F05237"
+                app:layout_constraintBottom_toBottomOf="@id/tv_inputStatus"
+                app:layout_constraintRight_toLeftOf="@id/tv_inputStatus"
+                app:layout_constraintTop_toTopOf="@id/tv_inputStatus" />
+
+            <View
+                android:layout_width="2dp"
+                android:layout_height="10dp"
+                android:layout_marginStart="10dp"
+                android:background="#F05237"
+                app:layout_constraintBottom_toBottomOf="@id/tv_inputStatus"
+                app:layout_constraintLeft_toRightOf="@id/tv_inputStatus"
+                app:layout_constraintTop_toTopOf="@id/tv_inputStatus" />
+
+            <TextView
+                android:id="@+id/tv_inputStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/nanumsquarer"
+                android:gravity="center"
+                android:text=""
+                android:textColor="@android:color/black"
+                android:textSize="15sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ProgressBar
+                android:id="@+id/graph_progress"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:indeterminateTint="#F05237"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_inputGraph"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="10dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="@id/graph_gl4"
+                app:layout_constraintRight_toRightOf="@id/graph_gl5"
+                app:layout_constraintTop_toBottomOf="@id/tv_inputStatus">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/graph_cl_inputMuscleMass"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toTopOf="@id/graph_cl_inputBodyFatMass"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:fontFamily="@font/nanumsquareb"
+                        android:text="근육량"
+                        android:textColor="@android:color/black"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toTopOf="@id/graph_et_inputMuscleMass"
+                        app:layout_constraintLeft_toLeftOf="parent" />
+
+                    <EditText
+                        android:id="@+id/graph_et_inputMuscleMass"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/edittext_layout"
+                        android:fontFamily="@font/nanumsquarer"
+                        android:hint="본인의 근육량을 입력해주세요 (단위 %)"
+                        android:inputType="numberDecimal"
+                        android:paddingStart="10dp"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/graph_cl_inputBodyFatMass"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toTopOf="@id/graph_cl_inputWeight"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/graph_cl_inputMuscleMass">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:fontFamily="@font/nanumsquareb"
+                        android:text="체지방량"
+                        android:textColor="@android:color/black"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toTopOf="@id/graph_et_inputBodyFatMass"
+                        app:layout_constraintLeft_toLeftOf="parent" />
+
+                    <EditText
+                        android:id="@+id/graph_et_inputBodyFatMass"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/edittext_layout"
+                        android:fontFamily="@font/nanumsquarer"
+                        android:hint="본인의 체지방량을 입력해주세요 (단위 %)"
+                        android:inputType="numberDecimal"
+                        android:paddingStart="10dp"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/graph_cl_inputWeight"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toTopOf="@id/graph_btn_input"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/graph_cl_inputBodyFatMass">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:fontFamily="@font/nanumsquareb"
+                        android:text="몸무게"
+                        android:textColor="@android:color/black"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toTopOf="@id/graph_et_inputWeight"
+                        app:layout_constraintLeft_toLeftOf="parent" />
+
+                    <EditText
+                        android:id="@+id/graph_et_inputWeight"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/edittext_layout"
+                        android:fontFamily="@font/nanumsquarer"
+                        android:hint="본인의 몸무게를 입력해주세요 (단위 %)"
+                        android:inputType="numberDecimal"
+                        android:paddingStart="10dp"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <Button
+                    android:id="@+id/graph_btn_input"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_marginBottom="50dp"
+                    android:background="@drawable/signup_button_layout"
+                    android:fontFamily="@font/nanumsquarer"
+                    android:text="삽입하기"
+                    android:textColor="@android:color/white"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_fixGraph"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="10dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="@id/graph_gl4"
+                app:layout_constraintRight_toRightOf="@id/graph_gl5"
+                app:layout_constraintTop_toBottomOf="@id/tv_inputStatus">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/graph_cl_fixMuscleMass"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toTopOf="@id/graph_cl_fixBodyFatMass"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:fontFamily="@font/nanumsquareb"
+                        android:text="근육량"
+                        android:textColor="@android:color/black"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toTopOf="@id/graph_et_fixMuscleMass"
+                        app:layout_constraintLeft_toLeftOf="parent" />
+
+                    <EditText
+                        android:id="@+id/graph_et_fixMuscleMass"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/edittext_layout"
+                        android:fontFamily="@font/nanumsquarer"
+                        android:hint="본인의 근육량을 입력해주세요 (단위 %)"
+                        android:inputType="numberDecimal"
+                        android:paddingStart="10dp"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/graph_cl_fixBodyFatMass"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toTopOf="@id/graph_cl_fixWeight"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/graph_cl_fixMuscleMass">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:fontFamily="@font/nanumsquareb"
+                        android:text="체지방량"
+                        android:textColor="@android:color/black"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toTopOf="@id/graph_et_fixBodyFatMass"
+                        app:layout_constraintLeft_toLeftOf="parent" />
+
+                    <EditText
+                        android:id="@+id/graph_et_fixBodyFatMass"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/edittext_layout"
+                        android:fontFamily="@font/nanumsquarer"
+                        android:hint="본인의 체지방량을 입력해주세요 (단위 %)"
+                        android:inputType="numberDecimal"
+                        android:paddingStart="10dp"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/graph_cl_fixWeight"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toTopOf="@id/graph_btn_fix"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/graph_cl_fixBodyFatMass">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:fontFamily="@font/nanumsquareb"
+                        android:text="몸무게"
+                        android:textColor="@android:color/black"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toTopOf="@id/graph_et_fixWeight"
+                        app:layout_constraintLeft_toLeftOf="parent" />
+
+                    <EditText
+                        android:id="@+id/graph_et_fixWeight"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/edittext_layout"
+                        android:fontFamily="@font/nanumsquarer"
+                        android:hint="본인의 몸무게를 입력해주세요 (단위 %)"
+                        android:inputType="numberDecimal"
+                        android:paddingStart="10dp"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <Button
+                    android:id="@+id/graph_btn_fix"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_marginBottom="50dp"
+                    android:background="@drawable/signup_button_layout"
+                    android:fontFamily="@font/nanumsquarer"
+                    android:text="수정하기"
+                    android:textColor="@android:color/white"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent" />
+
+                <Button
+                    android:id="@+id/graph_btn_delete"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:background="#00000000"
+                    android:gravity="center"
+                    android:text="@string/delete_graph"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/graph_btn_fix" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/graph_gl4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.15" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/graph_gl5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.85" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/graph_gl1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.35" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/graph_gl2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.05" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/graph_gl3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.95" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

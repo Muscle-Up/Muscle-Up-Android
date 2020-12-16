@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.changeProfile.EditProfileActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageButton
+            android:id="@+id/edit_profile_btn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="27dp"
+            android:background="@drawable/back_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/edit_profile_tv_intro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/nanumsquareeb"
+            android:text="프로필 사진/개인정보 수정"
+            android:textColor="@android:color/black"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@id/edit_profile_btn_back"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/edit_profile_btn_back" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/edit_profile_iv"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginBottom="60dp"
+            app:layout_constraintBottom_toTopOf="@id/edit_profile_et_name"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edit_profile_tv_intro"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <ImageButton
+            android:id="@+id/edit_profile_btn_gallery"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:background="@drawable/button_circle"
+            android:src="@drawable/ic_baseline_photo_camera_24"
+            app:layout_constraintBottom_toBottomOf="@id/edit_profile_iv"
+            android:tint="@color/colorWhite"
+            app:layout_constraintRight_toRightOf="@id/edit_profile_iv" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="이름"
+            android:textColor="#000000"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@id/edit_profile_et_name"
+            app:layout_constraintLeft_toLeftOf="@id/edit_profile_et_name" />
+
+        <EditText
+            android:id="@+id/edit_profile_et_name"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginBottom="48dp"
+            android:background="@drawable/edittext_layout"
+            android:paddingStart="10dp"
+            app:layout_constraintBottom_toTopOf="@id/edit_profile_et_age"
+            app:layout_constraintLeft_toLeftOf="@id/edit_profile_guideline1"
+            app:layout_constraintRight_toRightOf="@id/edit_profile_guideline2"
+            app:layout_constraintTop_toBottomOf="@id/edit_profile_iv" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="나이"
+            android:textColor="#000000"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@id/edit_profile_et_age"
+            app:layout_constraintLeft_toLeftOf="@id/edit_profile_et_age" />
+
+        <EditText
+            android:id="@+id/edit_profile_et_age"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/edittext_layout"
+            android:inputType="number"
+            android:paddingStart="10dp"
+            app:layout_constraintBottom_toTopOf="@id/edit_profile_btn_edit"
+            app:layout_constraintLeft_toLeftOf="@id/edit_profile_guideline1"
+            app:layout_constraintRight_toLeftOf="@id/edit_profile_et_height"
+            app:layout_constraintTop_toBottomOf="@id/edit_profile_et_name" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="키"
+            android:textColor="#000000"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@id/edit_profile_et_height"
+            app:layout_constraintLeft_toLeftOf="@id/edit_profile_et_height" />
+
+        <EditText
+            android:id="@+id/edit_profile_et_height"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/edittext_layout"
+            android:inputType="numberDecimal"
+            android:paddingStart="10dp"
+            app:layout_constraintBottom_toBottomOf="@id/edit_profile_et_age"
+            app:layout_constraintLeft_toRightOf="@id/edit_profile_et_age"
+            app:layout_constraintRight_toLeftOf="@id/edit_profile_et_weight"
+            app:layout_constraintTop_toTopOf="@id/edit_profile_et_age" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="몸무게"
+            android:textColor="#000000"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@id/edit_profile_et_weight"
+            app:layout_constraintLeft_toLeftOf="@id/edit_profile_et_weight" />
+
+        <EditText
+            android:id="@+id/edit_profile_et_weight"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:background="@drawable/edittext_layout"
+            android:inputType="numberDecimal"
+            android:paddingStart="10dp"
+            app:layout_constraintBottom_toBottomOf="@id/edit_profile_et_age"
+            app:layout_constraintLeft_toRightOf="@id/edit_profile_et_height"
+            app:layout_constraintRight_toRightOf="@id/edit_profile_guideline2"
+            app:layout_constraintTop_toTopOf="@id/edit_profile_et_age" />
+
+        <Button
+            android:id="@+id/edit_profile_btn_edit"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:background="@drawable/signup_button_layout"
+            android:fontFamily="@font/nanumsquarer"
+            android:text="변경하기"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@id/edit_profile_guideline3"
+            app:layout_constraintLeft_toLeftOf="@id/edit_profile_guideline1"
+            app:layout_constraintRight_toRightOf="@id/edit_profile_guideline2" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/edit_profile_guideline1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.1" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/edit_profile_guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.9" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/edit_profile_guideline3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.8" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

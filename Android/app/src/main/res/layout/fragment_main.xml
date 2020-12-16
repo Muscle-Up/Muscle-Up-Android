@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.mainFrag.MainFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#F5F6F8">
+
+        <Button
+            android:id="@+id/main_frag_btn_drawer"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="27dp"
+            android:background="@drawable/ic_baseline_notes_24"
+            android:backgroundTint="@android:color/black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/main_frag_tv_intro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/nanumsquareeb"
+            android:text="Muscle Up"
+            android:textColor="@android:color/black"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@id/main_frag_btn_drawer"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/main_frag_btn_drawer" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/main_frag_cl_greet"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="36dp"
+            android:background="@drawable/radius_greet"
+            android:elevation="6dp"
+            app:layout_constraintLeft_toLeftOf="@id/main_frag_guideline1"
+            app:layout_constraintRight_toRightOf="@id/main_frag_guideline2"
+            app:layout_constraintTop_toBottomOf="@id/main_frag_tv_intro">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/main_page_iv_profile"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nanumsquarer"
+                android:textColor="@android:color/black"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/main_page_iv_profile"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <Spinner
+            android:id="@+id/main_frag_spinner"
+            android:layout_width="70dp"
+            android:layout_height="30dp"
+            android:layout_margin="10dp"
+            android:background="#E4E4E4"
+            android:popupBackground="@android:color/white"
+            android:popupElevation="6dp"
+            android:theme="@style/SpinnerTheme"
+            app:layout_constraintBottom_toTopOf="@id/main_frag_graph"
+            app:layout_constraintRight_toRightOf="@id/main_frag_guideline2" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginBottom="15dp"
+            android:fontFamily="@font/nanumsquareb"
+            android:text="그래프"
+            android:textColor="@android:color/black"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toTopOf="@id/main_frag_graph"
+            app:layout_constraintLeft_toLeftOf="@id/main_frag_guideline1" />
+
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/main_frag_graph"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="72dp"
+            android:background="@drawable/radius"
+            android:elevation="6dp"
+            app:layout_constraintBottom_toTopOf="@id/main_frag_cl_post"
+            app:layout_constraintLeft_toLeftOf="@id/main_frag_guideline1"
+            app:layout_constraintRight_toRightOf="@id/main_frag_guideline2"
+            app:layout_constraintTop_toBottomOf="@id/main_frag_cl_greet" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginBottom="15dp"
+            android:fontFamily="@font/nanumsquareb"
+            android:text="몸변화 리스트"
+            android:textColor="@android:color/black"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toTopOf="@id/main_frag_cl_post"
+            app:layout_constraintLeft_toLeftOf="@id/main_frag_guideline1" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/main_frag_cl_post"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="72dp"
+            android:background="@drawable/radius"
+            app:layout_constraintBottom_toBottomOf="@id/main_frag_guideline3"
+            app:layout_constraintLeft_toLeftOf="@id/main_frag_guideline1"
+            app:layout_constraintRight_toRightOf="@id/main_frag_guideline2"
+            app:layout_constraintTop_toBottomOf="@id/main_frag_graph">
+
+            <TextView
+                android:id="@+id/main_frag_tv_post_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/main_frag_tv_post_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/main_frag_iv_post_image"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/main_frag_tv_post_content"
+                app:layout_constraintTop_toBottomOf="@id/main_frag_tv_post_name" />
+
+            <TextView
+                android:id="@+id/main_frag_tv_post_content"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_margin="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/main_frag_iv_post_image"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/main_frag_tv_post_name" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/main_frag_guideline1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.05" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/main_frag_guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.95" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/main_frag_guideline3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.95" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

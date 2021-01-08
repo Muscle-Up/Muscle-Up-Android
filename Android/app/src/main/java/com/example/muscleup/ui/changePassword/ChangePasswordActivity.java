@@ -25,7 +25,7 @@ public class ChangePasswordActivity extends AppCompatActivity implements ChangeP
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_change_password);
 
-        binding.changePassBtnApply.setOnClickListener(view -> {
+        binding.changePassBtnEdit.setOnClickListener(view -> {
             String newPass = binding.changePassEtNew.getText().toString();
             String checkPass = binding.changePassEtCheck.getText().toString();
 

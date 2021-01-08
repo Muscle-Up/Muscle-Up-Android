@@ -21,7 +21,7 @@ public class PoseModel {
 
     public PoseModel(CheckPoseListener checkPoseListener) {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("BASE_URL")
+                .baseUrl("http://15.165.38.79/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         poseService = retrofit.create(PoseService.class);

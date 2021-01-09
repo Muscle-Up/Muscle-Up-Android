@@ -3,6 +3,13 @@
     package="com.example.muscleup">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
 
     <application
         android:allowBackup="true"
@@ -11,7 +18,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.changeProfile.EditProfileActivity"></activity>
+        <activity android:name=".ui.myExpertProfile.MyExpertProfileActivity" />
+        <activity android:name=".ui.registerExpert.RegisterExpertActivity" />
+        <activity android:name=".ui.changeProfile.EditProfileActivity" />
         <activity android:name=".ui.changePassword.ChangePasswordActivity" />
         <activity android:name=".ui.mainPage.MainPageActivity">
             <intent-filter>

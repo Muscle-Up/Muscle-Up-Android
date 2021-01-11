@@ -84,7 +84,7 @@
         android:layout_marginTop="10dp"
         android:background="@drawable/edittext_layout"
         android:hint="  비밀번호를 입력해주세요"
-        android:inputType="textPersonName"
+        android:inputType="textPassword"
         app:layout_constraintEnd_toStartOf="@+id/guideline4"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
         app:layout_constraintTop_toBottomOf="@+id/password_textView" />
@@ -96,7 +96,7 @@
         android:layout_marginTop="10dp"
         android:background="@drawable/edittext_layout"
         android:hint="  비밀번호를 확인해주세요"
-        android:inputType="textPersonName"
+        android:inputType="textPassword"
         app:layout_constraintEnd_toStartOf="@+id/guideline4"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
         app:layout_constraintTop_toBottomOf="@+id/check_password_textView" />
@@ -134,18 +134,5 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_baseline_arrow_back_ios_24"
         android:onClick="backButton_Click" />
-
-    <TextView
-        android:id="@+id/result_textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="117dp"
-        android:layout_marginTop="45dp"
-        android:layout_marginEnd="171dp"
-        android:text="TextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageView4"
-        app:layout_constraintTop_toTopOf="parent" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

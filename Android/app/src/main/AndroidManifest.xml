@@ -17,20 +17,21 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
         <activity android:name=".ui.myExpertProfile.MyExpertProfileActivity" />
         <activity android:name=".ui.registerExpert.RegisterExpertActivity" />
         <activity android:name=".ui.changeProfile.EditProfileActivity" />
         <activity android:name=".ui.changePassword.ChangePasswordActivity" />
-        <activity android:name=".ui.mainPage.MainPageActivity">
+        <activity android:name=".ui.mainPage.MainPageActivity" />
+        <activity android:name=".ui.graph.GraphActivity" />
+        <activity android:name=".ui.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.graph.GraphActivity" />
-        <activity android:name=".ui.main.MainActivity" />
         <activity android:name=".FindPasswordActivity" />
         <activity android:name=".SignUpActivity" />
         <activity android:name=".SignUpActivity2" />

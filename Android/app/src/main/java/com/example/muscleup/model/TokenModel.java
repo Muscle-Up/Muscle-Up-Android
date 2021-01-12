@@ -1,5 +1,7 @@
 package com.example.muscleup.model;
 
+import android.util.Log;
+
 import com.example.muscleup.model.callback.LoadTokenListener;
 import com.example.muscleup.model.data.Login;
 import com.example.muscleup.model.data.Token;
@@ -19,7 +21,7 @@ public class TokenModel {
 
     public TokenModel() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://15.165.38.79/")
+                .baseUrl("http://15.165.38.79:8000/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         tokenService = retrofit.create(TokenService.class);
@@ -30,7 +32,8 @@ public class TokenModel {
         call.enqueue(new Callback<Token>() {
             @Override
             public void onResponse(@NotNull Call<Token> call, @NotNull Response<Token> response) {
-                if(!response.isSuccessful()) {
+                if (!response.isSuccessful()) {
+                    Log.d("TokenModel", "onResponse: " + response.code());
                     loadTokenListener.onFail();
                     return;
                 }
@@ -50,7 +53,7 @@ public class TokenModel {
         call.enqueue(new Callback<Token>() {
             @Override
             public void onResponse(@NotNull Call<Token> call, @NotNull Response<Token> response) {
-                if(!response.isSuccessful()) {
+                if (!response.isSuccessful()) {
                     loadTokenListener.onFail();
                     return;
                 }

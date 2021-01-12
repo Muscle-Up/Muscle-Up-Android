@@ -19,7 +19,7 @@ public class ExpertModel {
 
     public ExpertModel() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://15.165.38.79/")
+                .baseUrl("http://15.165.38.79:8000/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         expertService = retrofit.create(ExpertService.class);

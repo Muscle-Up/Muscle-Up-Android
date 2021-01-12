@@ -18,7 +18,7 @@ public class ChangePasswordModel {
 
     public ChangePasswordModel(ChangePasswordListener changePasswordListener) {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://15.165.38.79/")
+                .baseUrl("http://15.165.38.79:8000/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         changePasswordService = retrofit.create(ChangePasswordService.class);

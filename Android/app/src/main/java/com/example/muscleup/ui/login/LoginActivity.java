@@ -30,8 +30,8 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
         sharedAutoLogin = getSharedPreferences("AutoLogin", MODE_PRIVATE);
 
         binding.loginBtn.setOnClickListener(view -> {
-            String email = binding.loginEtEmail.toString();
-            String password = binding.loginEtPassword.toString();
+            String email = binding.loginEtEmail.getText().toString();
+            String password = binding.loginEtPassword.getText().toString();
 
             if (email.length() < 1 || password.length() < 1) {
                 makeToast("이메일과 패스워드를 입력해주세요");
@@ -41,9 +41,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
             presenter.login(new Login(email, password));
         });
 
-        binding.loginBtnBack.setOnClickListener(view -> {
-            finish();
-        });
+        binding.loginBtnBack.setOnClickListener(view -> finish());
     }
 
     @Override

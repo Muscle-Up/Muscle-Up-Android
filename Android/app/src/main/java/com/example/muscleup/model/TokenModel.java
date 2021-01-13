@@ -54,6 +54,7 @@ public class TokenModel {
             @Override
             public void onResponse(@NotNull Call<Token> call, @NotNull Response<Token> response) {
                 if (!response.isSuccessful()) {
+                    Log.d("TokenModel", "onResponse: "+response.code());
                     loadTokenListener.onFail();
                     return;
                 }

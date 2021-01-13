@@ -32,9 +32,9 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         presenter = new MainPresenter(this);
         sharedAutoLogin = getSharedPreferences("AutoLogin", MODE_PRIVATE);
 
-        if(sharedAutoLogin.getBoolean("AutoLogin", false)){
+        if(sharedAutoLogin.getBoolean("isAuto", false)){
             SharedPreferences sharedToken = getSharedPreferences("Token", MODE_PRIVATE);
-            presenter.getNewToken(sharedToken.getString("refreshToken", "null"));
+            presenter.getNewToken(sharedToken.getString("RefreshToken", "null"));
         }
 
         binding.mainBtnLogin.setOnClickListener(view -> {

@@ -24,7 +24,7 @@ public class ChangePasswordPresenter implements ChangePasswordContract.Presenter
         }
     };
 
-    public ChangePasswordPresenter(ChangePasswordContract.View view){
+    public ChangePasswordPresenter(ChangePasswordContract.View view) {
         changePasswordModel = new ChangePasswordModel(new ChangePasswordListener() {
             @Override
             public void onSuccess() {
@@ -42,11 +42,11 @@ public class ChangePasswordPresenter implements ChangePasswordContract.Presenter
 
     @Override
     public void changePassword(String token, String password) {
-        changePasswordModel.changePassword(token, password);
+        changePasswordModel.changePassword("Bearer " + token, password);
     }
 
     @Override
     public void TokenRefresh(String refreshToken) {
-        tokenModel.getNewToken(refreshToken, loadTokenListener);
+        tokenModel.getNewToken("Bearer " + refreshToken, loadTokenListener);
     }
 }

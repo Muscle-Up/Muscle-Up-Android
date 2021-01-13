@@ -26,7 +26,9 @@ import com.example.muscleup.ui.graph.GraphActivity;
 import com.example.muscleup.ui.login.LoginActivity;
 import com.example.muscleup.ui.main.MainActivity;
 import com.example.muscleup.ui.mainFrag.MainFragment;
+import com.example.muscleup.ui.myExpertProfile.MyExpertProfileActivity;
 import com.example.muscleup.ui.pose.PoseFragment;
+import com.example.muscleup.ui.registerExpert.RegisterExpertActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.io.ByteArrayOutputStream;
@@ -48,6 +50,7 @@ public class MainPageActivity extends AppCompatActivity implements MainPageContr
         setContentView(R.layout.activity_main_page);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main_page);
 
+        changeFragment(mainPageFragment);
         binding.mainBnv.setOnNavigationItemSelectedListener((BottomNavigationView.OnNavigationItemSelectedListener) menuItem -> {
             switch (menuItem.getItemId()) {
                 case R.id.menu_main:
@@ -73,8 +76,14 @@ public class MainPageActivity extends AppCompatActivity implements MainPageContr
             return true;
         });
 
+        binding.drawerBtnMyExpertProfile.setOnClickListener(view -> {
+            Intent intent = new Intent(this, MyExpertProfileActivity.class);
+            startActivity(intent);
+        });
+
         binding.drawerBtnRegisterExpert.setOnClickListener(view -> {
-            // Todo : 전문가 등록 Activity 로 이동하는 코드 추가
+            Intent intent = new Intent(this, RegisterExpertActivity.class);
+            startActivity(intent);
         });
 
         binding.drawerBtnChangeInfo.setOnClickListener(view -> {
@@ -115,10 +124,12 @@ public class MainPageActivity extends AppCompatActivity implements MainPageContr
 
     @Override
     public void setUserProfile(UserProfile userProfile) {
-        Bitmap image = BitmapFactory.decodeByteArray(userProfile.getImage(), 0, userProfile.getImage().length);
-        String name = userProfile.getName() + " 님";
+        if(userProfile.getImage() != null){
+            Bitmap image = BitmapFactory.decodeByteArray(userProfile.getImage(), 0, userProfile.getImage().length);
+            binding.mainIvProfile.setImageBitmap(image);
+        }
 
-        binding.mainIvProfile.setImageBitmap(image);
+        String name = userProfile.getName() + " 님";
         binding.mainTvName.setText(name);
     }
 
@@ -142,7 +153,7 @@ public class MainPageActivity extends AppCompatActivity implements MainPageContr
 
     public String getToken() {
         SharedPreferences sharedPreferences = getSharedPreferences("Token", MODE_PRIVATE);
-        return sharedPreferences.getString("accessToken", "");
+        return sharedPreferences.getString("AccessToken", "");
     }
 
     public String getRefreshToken() {

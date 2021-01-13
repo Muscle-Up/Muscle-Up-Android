@@ -33,13 +33,11 @@ public class ChangePasswordActivity extends AppCompatActivity implements ChangeP
 
             SharedPreferences sharedPreferences = getSharedPreferences("Token", MODE_PRIVATE);
             newPassword = newPass;
-            if (newPass == checkPass) presenter.changePassword(
+            if (newPass.equals(checkPass)) presenter.changePassword(
                     sharedPreferences.getString("AccessToken", "null"), newPassword);
         });
 
-        binding.changePassBtnBack.setOnClickListener(view -> {
-            finish();
-        });
+        binding.changePassBtnBack.setOnClickListener(view -> finish());
 
         presenter = new ChangePasswordPresenter(this);
     }

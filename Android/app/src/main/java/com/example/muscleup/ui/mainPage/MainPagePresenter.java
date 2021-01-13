@@ -21,7 +21,7 @@ public class MainPagePresenter implements MainPageContract.Presenter {
 
     @Override
     public void getUserProfile(String token) {
-        userProfileModel.getUserProfile(token, new LoadUserInfoListener() {
+        userProfileModel.getUserProfile("Bearer " + token, new LoadUserInfoListener() {
             @Override
             public void loadUserInfo(UserProfile userInfo) {
                 view.setUserProfile(userInfo);
@@ -36,7 +36,7 @@ public class MainPagePresenter implements MainPageContract.Presenter {
 
     @Override
     public void tokenRefresh(String refreshToken) {
-        tokenModel.getNewToken(refreshToken, new LoadTokenListener() {
+        tokenModel.getNewToken("Bearer " + refreshToken, new LoadTokenListener() {
             @Override
             public void loadToken(Token token) {
                 view.retryGetUserProfile(token);

@@ -53,6 +53,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+                android:id="@+id/main_page_tv_greet"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/nanumsquarer"
@@ -119,6 +120,7 @@
             android:layout_height="0dp"
             android:layout_marginTop="72dp"
             android:background="@drawable/radius"
+            android:elevation="6dp"
             app:layout_constraintBottom_toBottomOf="@id/main_frag_guideline3"
             app:layout_constraintLeft_toLeftOf="@id/main_frag_guideline1"
             app:layout_constraintRight_toRightOf="@id/main_frag_guideline2"

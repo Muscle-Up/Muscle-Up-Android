@@ -65,14 +65,14 @@ public class MainFragPresenter implements MainFragContract.Presenter {
 
     @Override
     public void getGraph(String token) {
-        graphModel.getGraph(token, loadGraphListener, GraphModel.MUSCLE_MATH_GRAPH);
-        graphModel.getGraph(token, loadGraphListener, GraphModel.BODY_FAT_MASS_GRAPH);
-        graphModel.getGraph(token, loadGraphListener, GraphModel.WEIGHT_GRAPH);
+        graphModel.getGraph("Bearer " + token, loadGraphListener, GraphModel.MUSCLE_MATH_GRAPH);
+        graphModel.getGraph("Bearer " + token, loadGraphListener, GraphModel.BODY_FAT_MASS_GRAPH);
+        graphModel.getGraph("Bearer " + token, loadGraphListener, GraphModel.WEIGHT_GRAPH);
     }
 
     @Override
     public void getPost(String token) {
-        bodyPostModel.getBodyPost(token, new LoadBodyPostListener() {
+        bodyPostModel.getBodyPost("Bearer " + token, new LoadBodyPostListener() {
             @Override
             public void onSuccess(List<BodyPost> bodyPostList) {
                 view.setPost(bodyPostList.get(0));
@@ -87,7 +87,7 @@ public class MainFragPresenter implements MainFragContract.Presenter {
 
     @Override
     public void getPostImage(String token, String imageName) {
-        bodyPostModel.getBodyPostImage(token, imageName, new LoadBodyPostImageListener() {
+        bodyPostModel.getBodyPostImage("Bearer " + token, imageName, new LoadBodyPostImageListener() {
             @Override
             public void onSuccess(byte[] image) {
                 view.setPostImage(image);
@@ -102,7 +102,7 @@ public class MainFragPresenter implements MainFragContract.Presenter {
 
     @Override
     public void getUserProfile(String token) {
-        userProfileModel.getUserProfile(token, new LoadUserInfoListener() {
+        userProfileModel.getUserProfile("Bearer " + token, new LoadUserInfoListener() {
             @Override
             public void loadUserInfo(UserProfile userProfile) {
                 view.setUserProfile(userProfile);

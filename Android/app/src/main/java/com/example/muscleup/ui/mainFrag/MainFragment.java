@@ -2,6 +2,7 @@ package com.example.muscleup.ui.mainFrag;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,15 +19,22 @@ import com.example.muscleup.model.data.BodyPost;
 import com.example.muscleup.model.data.Graph;
 import com.example.muscleup.model.data.Token;
 import com.example.muscleup.model.data.UserProfile;
-import com.example.muscleup.ui.main.MainActivity;
+import com.example.muscleup.ui.graph.GraphActivity;
 import com.example.muscleup.ui.mainPage.MainPageActivity;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 
 public class MainFragment extends Fragment implements MainFragContract.View {
 
@@ -34,27 +42,16 @@ public class MainFragment extends Fragment implements MainFragContract.View {
     private List<Entry> bodyFatMassGraphList = new ArrayList<>();
     private List<Entry> muscleMassGraphList = new ArrayList<>();
 
-    private LineData weightData = new LineData();
-    private LineData bodyFatMassData = new LineData();
-    private LineData muscleMassData = new LineData();
-
     private FragmentMainBinding binding;
     private MainFragContract.Presenter presenter;
 
     private String bodyPostImageName;
+    private int curGraph;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_main, container, false);
-
-        LineDataSet weightDataSet = new LineDataSet(weightGraphList, "몸무게");
-        LineDataSet bodyFatMassDataSet = new LineDataSet(bodyFatMassGraphList, "체지방량");
-        LineDataSet muscleMassDataSet = new LineDataSet(muscleMassGraphList, "근육량");
-
-        weightData.addDataSet(weightDataSet);
-        bodyFatMassData.addDataSet(bodyFatMassDataSet);
-        muscleMassData.addDataSet(muscleMassDataSet);
 
         ArrayList<String> graphList = new ArrayList<>();
         graphList.add("근육량");
@@ -68,18 +65,18 @@ public class MainFragment extends Fragment implements MainFragContract.View {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 switch (i) {
                     case 0:
-                        binding.mainFragGraph.setData(muscleMassData);
-                        binding.mainFragGraph.invalidate();
+                        curGraph = GraphActivity.GRAPH_MUSCLE;
+                        setGraph(binding.mainFragGraph, muscleMassGraphList, "근육량");
                         break;
 
                     case 1:
-                        binding.mainFragGraph.setData(bodyFatMassData);
-                        binding.mainFragGraph.invalidate();
+                        curGraph = GraphActivity.GRAPH_BODY_FAT;
+                        setGraph(binding.mainFragGraph, bodyFatMassGraphList, "체지방량");
                         break;
 
                     case 2:
-                        binding.mainFragGraph.setData(weightData);
-                        binding.mainFragGraph.invalidate();
+                        curGraph = GraphActivity.GRAPH_WEIGHT;
+                        setGraph(binding.mainFragGraph, weightGraphList, "몸무게");
                         break;
                 }
             }
@@ -88,7 +85,6 @@ public class MainFragment extends Fragment implements MainFragContract.View {
             public void onNothingSelected(AdapterView<?> adapterView) {
             }
         });
-        binding.mainFragSpinner.setSelection(0);
 
         binding.mainFragBtnDrawer.setOnClickListener(
                 view -> ((MainPageActivity) getActivity()).openDrawer());
@@ -100,41 +96,43 @@ public class MainFragment extends Fragment implements MainFragContract.View {
                 view -> ((MainPageActivity) getActivity()).startBodyPostActivity());
 
         presenter = new MainFragPresenter(this);
-        presenter.getGraph(((MainPageActivity) getActivity()).getToken());
+        presenter.getGraph(((MainPageActivity) Objects.requireNonNull(getActivity())).getToken());
         presenter.getPost(((MainPageActivity) getActivity()).getToken());
         presenter.getUserProfile(((MainPageActivity) getActivity()).getToken());
+
+        binding.mainFragSpinner.setSelection(0);
 
         return binding.getRoot();
     }
 
     @Override
     public void setWeightGraph(List<Graph> weightGraphList) {
+        this.weightGraphList.clear();
         for (Graph graph : weightGraphList) {
-            this.weightGraphList.add(new Entry(graph.getValue(), graph.getId()));
+            this.weightGraphList.add(new Entry(graph.getId(), graph.getValue()));
         }
-
-        binding.mainFragGraph.notifyDataSetChanged();
-        binding.mainFragGraph.invalidate();
+        if (curGraph == GraphActivity.GRAPH_WEIGHT)
+            setGraph(binding.mainFragGraph, this.weightGraphList, "몸무게");
     }
 
     @Override
     public void setBodyFatMassGraph(List<Graph> bodyFatMassGraphList) {
+        this.bodyFatMassGraphList.clear();
         for (Graph graph : bodyFatMassGraphList) {
-            this.bodyFatMassGraphList.add(new Entry(graph.getValue(), graph.getId()));
+            this.bodyFatMassGraphList.add(new Entry(graph.getId(), graph.getValue()));
         }
-
-        binding.mainFragGraph.notifyDataSetChanged();
-        binding.mainFragGraph.invalidate();
+        if (curGraph == GraphActivity.GRAPH_BODY_FAT)
+            setGraph(binding.mainFragGraph, this.bodyFatMassGraphList, "체지방량");
     }
 
     @Override
     public void setMuscleMassGraph(List<Graph> muscleMassGraphList) {
+        this.muscleMassGraphList.clear();
         for (Graph graph : muscleMassGraphList) {
-            this.muscleMassGraphList.add(new Entry(graph.getValue(), graph.getId()));
+            this.muscleMassGraphList.add(new Entry(graph.getId(), graph.getValue()));
         }
-
-        binding.mainFragGraph.notifyDataSetChanged();
-        binding.mainFragGraph.invalidate();
+        if (curGraph == GraphActivity.GRAPH_MUSCLE)
+            setGraph(binding.mainFragGraph, this.muscleMassGraphList, "근육량");
     }
 
     @Override
@@ -155,10 +153,12 @@ public class MainFragment extends Fragment implements MainFragContract.View {
 
     @Override
     public void setUserProfile(UserProfile userProfile) {
-        Bitmap profileImage = BitmapFactory.decodeByteArray(userProfile.getImage(), 0, userProfile.getImage().length);
-        binding.mainPageIvProfile.setImageBitmap(profileImage);
+        if (userProfile.getImage() != null) {
+            Bitmap image = BitmapFactory.decodeByteArray(userProfile.getImage(), 0, userProfile.getImage().length);
+            binding.mainPageIvProfile.setImageBitmap(image);
+        }
+        setGreetMessage(userProfile.getName());
     }
-
 
     @Override
     public void tokenError(int errorType) {
@@ -193,5 +193,47 @@ public class MainFragment extends Fragment implements MainFragContract.View {
     @Override
     public void gotoLogin() {
         ((MainPageActivity) Objects.requireNonNull(getActivity())).gotoLogin();
+    }
+
+    private void setGraph(LineChart lineChart, List<Entry> list, String label) {
+        LineDataSet lineDataSet = new LineDataSet(list, label);
+        LineData lineData = new LineData();
+        lineData.addDataSet(lineDataSet);
+        lineChart.setData(lineData);
+
+        XAxis xAxis = lineChart.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setDrawLabels(false);
+
+        YAxis yLAxis = lineChart.getAxisLeft();
+        yLAxis.setTextColor(Color.BLACK);
+
+        YAxis yRAxis = lineChart.getAxisRight();
+        yRAxis.setDrawLabels(false);
+        yRAxis.setDrawAxisLine(false);
+        yRAxis.setDrawGridLines(false);
+
+        Description description = new Description();
+        description.setText("");
+
+        lineChart.setDescription(description);
+        lineChart.invalidate();
+    }
+
+    private void setGreetMessage(String userName) {
+        Random random = new Random();
+        switch (random.nextInt(2)) {
+            case 0:
+                binding.mainPageTvGreet.setText(userName + "님 오늘도 화이팅 하세요!");
+                break;
+
+            case 1:
+                binding.mainPageTvGreet.setText(userName + "님 오늘도 힘내봅시다!");
+                break;
+
+            case 2:
+                binding.mainPageTvGreet.setText(userName + "님 운동 힘내세요!");
+                break;
+        }
     }
 }

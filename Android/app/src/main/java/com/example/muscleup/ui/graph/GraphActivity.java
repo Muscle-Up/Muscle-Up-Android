@@ -32,9 +32,9 @@ import java.util.List;
 
 public class GraphActivity extends AppCompatActivity implements GraphContract.View {
 
-    private static final int GRAPH_WEIGHT = 0;
-    private static final int GRAPH_BODY_FAT = 1;
-    private static final int GRAPH_MUSCLE = 2;
+    public static final int GRAPH_WEIGHT = 0;
+    public static final int GRAPH_BODY_FAT = 1;
+    public static final int GRAPH_MUSCLE = 2;
 
     private List<Entry> weightGraphList = new ArrayList<>();
     private List<Entry> bodyFatMassGraphList = new ArrayList<>();

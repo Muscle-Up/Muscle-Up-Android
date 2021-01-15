@@ -2,6 +2,7 @@ package com.example.muscleup.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -22,6 +23,7 @@ public class CustomDialog {
 
     public void callFunction() {
         Dialog dialog = new Dialog(context);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_custom);
         dialog.show();
 

@@ -3,9 +3,9 @@ package com.example.muscleup.ui.graph;
 import com.example.muscleup.model.GraphModel;
 import com.example.muscleup.model.TokenModel;
 import com.example.muscleup.model.callback.CheckInputListener;
+import com.example.muscleup.model.callback.EditGraphListener;
 import com.example.muscleup.model.callback.LoadGraphListener;
 import com.example.muscleup.model.callback.LoadTokenListener;
-import com.example.muscleup.model.callback.EditGraphListener;
 import com.example.muscleup.model.data.Graph;
 import com.example.muscleup.model.data.Token;
 
@@ -68,19 +68,19 @@ public class GraphPresenter implements GraphContract.Presenter {
 
     @Override
     public void checkInput(String token) {
-        graphModel.checkInput(token, checkInputListener);
+        graphModel.checkInput("Bearer " + token, checkInputListener);
     }
 
     @Override
     public void getGraph(String token) {
-        graphModel.getGraph(token, loadGraphListener, GraphModel.MUSCLE_MATH_GRAPH);
-        graphModel.getGraph(token, loadGraphListener, GraphModel.BODY_FAT_MASS_GRAPH);
-        graphModel.getGraph(token, loadGraphListener, GraphModel.WEIGHT_GRAPH);
+        graphModel.getGraph("Bearer " + token, loadGraphListener, GraphModel.MUSCLE_MATH_GRAPH);
+        graphModel.getGraph("Bearer " + token, loadGraphListener, GraphModel.BODY_FAT_MASS_GRAPH);
+        graphModel.getGraph("Bearer " + token, loadGraphListener, GraphModel.WEIGHT_GRAPH);
     }
 
     @Override
     public void inputGraph(String token, float weight, float muscleMass, float bodyFatMass) {
-        graphModel.postGraph(token, weight, muscleMass, bodyFatMass, new EditGraphListener() {
+        graphModel.postGraph("Bearer " + token, weight, muscleMass, bodyFatMass, new EditGraphListener() {
             @Override
             public void onSuccess() {
                 view.refreshGraph();
@@ -94,8 +94,8 @@ public class GraphPresenter implements GraphContract.Presenter {
     }
 
     @Override
-    public void fixGraph(String token, float weight, float muscleMass, float bodyFatMass) {
-        graphModel.putGraph(token, weight, muscleMass, bodyFatMass, new EditGraphListener() {
+    public void fixGraph(String token, float weight, float muscleMass, float bodyFatMass, int id) {
+        graphModel.putGraph("Bearer " + token, weight, muscleMass, bodyFatMass, id, new EditGraphListener() {
             @Override
             public void onSuccess() {
                 view.refreshGraph();
@@ -109,8 +109,8 @@ public class GraphPresenter implements GraphContract.Presenter {
     }
 
     @Override
-    public void deleteGraph(String token) {
-        graphModel.deleteGraph(token, new EditGraphListener() {
+    public void deleteGraph(String token, int id) {
+        graphModel.deleteGraph("Bearer " + token, id, new EditGraphListener() {
             @Override
             public void onSuccess() {
                 view.refreshGraph();

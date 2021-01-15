@@ -6,6 +6,7 @@ import com.example.muscleup.model.callback.CheckInputListener;
 import com.example.muscleup.model.callback.EditGraphListener;
 import com.example.muscleup.model.callback.LoadGraphListener;
 import com.example.muscleup.model.data.Graph;
+import com.example.muscleup.model.data.GraphRequest;
 import com.example.muscleup.model.service.GraphService;
 
 import java.util.List;
@@ -103,7 +104,7 @@ public class GraphModel {
 
     public void postGraph(String token, float weight, float muscleMass, float bodyFatMass,
                           EditGraphListener editGraphListener) {
-        Call<Void> call = graphService.postGraph(token, weight, muscleMass, bodyFatMass);
+        Call<Void> call = graphService.postGraph(token, new GraphRequest(weight, muscleMass, bodyFatMass));
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
@@ -121,9 +122,9 @@ public class GraphModel {
         });
     }
 
-    public void putGraph(String token, float weight, float muscleMass, float bodyFatMass,
+    public void putGraph(String token, float weight, float muscleMass, float bodyFatMass, int id,
                          EditGraphListener editGraphListener) {
-        Call<Void> call = graphService.putGraph(token, weight, muscleMass, bodyFatMass);
+        Call<Void> call = graphService.putGraph(token, new GraphRequest(weight, muscleMass, bodyFatMass), id);
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
@@ -141,8 +142,8 @@ public class GraphModel {
         });
     }
 
-    public void deleteGraph(String token, EditGraphListener editGraphListener) {
-        Call<Void> call = graphService.deleteGraph(token);
+    public void deleteGraph(String token, int id, EditGraphListener editGraphListener) {
+        Call<Void> call = graphService.deleteGraph(token, id);
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {

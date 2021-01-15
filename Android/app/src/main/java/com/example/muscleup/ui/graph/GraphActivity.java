@@ -2,7 +2,9 @@ package com.example.muscleup.ui.graph;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 
@@ -17,6 +19,10 @@ import com.example.muscleup.model.callback.CustomDialogListener;
 import com.example.muscleup.model.data.Graph;
 import com.example.muscleup.model.data.Token;
 import com.example.muscleup.ui.main.MainActivity;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -26,13 +32,13 @@ import java.util.List;
 
 public class GraphActivity extends AppCompatActivity implements GraphContract.View {
 
+    private static final int GRAPH_WEIGHT = 0;
+    private static final int GRAPH_BODY_FAT = 1;
+    private static final int GRAPH_MUSCLE = 2;
+
     private List<Entry> weightGraphList = new ArrayList<>();
     private List<Entry> bodyFatMassGraphList = new ArrayList<>();
     private List<Entry> muscleMassGraphList = new ArrayList<>();
-
-    private LineData weightData = new LineData();
-    private LineData bodyFatMassData = new LineData();
-    private LineData muscleMassData = new LineData();
 
     private ActivityGraphBinding binding;
     private GraphContract.Presenter presenter;
@@ -45,18 +51,13 @@ public class GraphActivity extends AppCompatActivity implements GraphContract.Vi
     private float fixMuscleMass;
     private float fixBodyFatMass;
 
+    private int lastIndexId;
+    private int curGraph;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_graph);
-
-        LineDataSet weightDataSet = new LineDataSet(weightGraphList, "몸무게");
-        LineDataSet bodyFatMassDataSet = new LineDataSet(bodyFatMassGraphList, "체지방량");
-        LineDataSet muscleMassDataSet = new LineDataSet(muscleMassGraphList, "근육량");
-
-        weightData.addDataSet(weightDataSet);
-        bodyFatMassData.addDataSet(bodyFatMassDataSet);
-        muscleMassData.addDataSet(muscleMassDataSet);
 
         ArrayList<String> graphList = new ArrayList<>();
         graphList.add("근육량");
@@ -69,18 +70,15 @@ public class GraphActivity extends AppCompatActivity implements GraphContract.Vi
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 switch (i) {
                     case 0:
-                        binding.graph.setData(muscleMassData);
-                        binding.graph.invalidate();
+                        setGraph(binding.graph, muscleMassGraphList, "근육량");
                         break;
 
                     case 1:
-                        binding.graph.setData(bodyFatMassData);
-                        binding.graph.invalidate();
+                        setGraph(binding.graph, bodyFatMassGraphList, "체지방량");
                         break;
 
                     case 2:
-                        binding.graph.setData(weightData);
-                        binding.graph.invalidate();
+                        setGraph(binding.graph, weightGraphList, "몸무게");
                         break;
                 }
             }
@@ -89,7 +87,6 @@ public class GraphActivity extends AppCompatActivity implements GraphContract.Vi
             public void onNothingSelected(AdapterView<?> adapterView) {
             }
         });
-        binding.graphSpinner.setSelection(0);
 
         binding.graphBtnBack.setOnClickListener(view -> finish());
 
@@ -114,14 +111,14 @@ public class GraphActivity extends AppCompatActivity implements GraphContract.Vi
             fixBodyFatMass = Float.parseFloat(binding.graphEtFixBodyFatMass.getText().toString());
             fixMuscleMass = Float.parseFloat(binding.graphEtFixMuscleMass.getText().toString());
 
-            presenter.fixGraph(getToken(), fixWeight, fixMuscleMass, fixBodyFatMass);
+            presenter.fixGraph(getToken(), fixWeight, fixMuscleMass, fixBodyFatMass, lastIndexId);
         });
 
         binding.graphBtnDelete.setOnClickListener(view -> {
             CustomDialog customDialog = new CustomDialog("입력하신 내용을 삭제하시겠습니까?", this, new CustomDialogListener() {
                 @Override
                 public void onClickOk() {
-                    presenter.deleteGraph(getToken());
+                    presenter.deleteGraph(getToken(), lastIndexId);
                 }
 
                 @Override
@@ -135,6 +132,10 @@ public class GraphActivity extends AppCompatActivity implements GraphContract.Vi
         presenter = new GraphPresenter(this);
         presenter.checkInput(getToken());
         presenter.getGraph(getToken());
+
+        binding.graphSpinner.setSelection(0);
+        curGraph = GRAPH_MUSCLE;
+        setGraph(binding.graph, muscleMassGraphList, "근육량");
     }
 
     @Override
@@ -155,32 +156,33 @@ public class GraphActivity extends AppCompatActivity implements GraphContract.Vi
 
     @Override
     public void setWeightGraph(List<Graph> weightGraphList) {
+        this.weightGraphList.clear();
         for (Graph graph : weightGraphList) {
-            this.weightGraphList.add(new Entry(graph.getValue(), graph.getId()));
+            this.weightGraphList.add(new Entry(graph.getId(), graph.getValue()));
         }
-
-        binding.graph.notifyDataSetChanged();
-        binding.graph.invalidate();
+        if(curGraph == GRAPH_WEIGHT) setGraph(binding.graph, this.weightGraphList, "몸무게");
+        lastIndexId = weightGraphList.get(weightGraphList.size() - 1).getId();
     }
 
     @Override
     public void setBodyFatMassGraph(List<Graph> bodyFatMassGraphList) {
+        this.bodyFatMassGraphList.clear();
         for (Graph graph : bodyFatMassGraphList) {
-            this.bodyFatMassGraphList.add(new Entry(graph.getValue(), graph.getId()));
+            this.bodyFatMassGraphList.add(new Entry(graph.getId(), graph.getValue()));
+            Log.d("GraphActivity", "setBodyFatMassGraph: " + graph.getId() + " " + graph.getValue());
         }
-
-        binding.graph.notifyDataSetChanged();
-        binding.graph.invalidate();
+        if(curGraph == GRAPH_BODY_FAT) setGraph(binding.graph, this.bodyFatMassGraphList, "체지방량");
+        lastIndexId = bodyFatMassGraphList.get(bodyFatMassGraphList.size() - 1).getId();
     }
 
     @Override
     public void setMuscleMassGraph(List<Graph> muscleMassGraphList) {
+        this.muscleMassGraphList.clear();
         for (Graph graph : muscleMassGraphList) {
-            this.muscleMassGraphList.add(new Entry(graph.getValue(), graph.getId()));
+            this.muscleMassGraphList.add(new Entry(graph.getId(), graph.getValue()));
         }
-
-        binding.graph.notifyDataSetChanged();
-        binding.graph.invalidate();
+        if(curGraph == GRAPH_MUSCLE) setGraph(binding.graph, this.muscleMassGraphList, "근육량");
+        lastIndexId = muscleMassGraphList.get(muscleMassGraphList.size() - 1).getId();
     }
 
     @Override
@@ -216,14 +218,13 @@ public class GraphActivity extends AppCompatActivity implements GraphContract.Vi
     @Override
     public void retryFixGraph(Token token) {
         setNewToken(token);
-        presenter.fixGraph(token.getAccessToken(), fixWeight, fixMuscleMass, fixBodyFatMass);
+        presenter.fixGraph(token.getAccessToken(), fixWeight, fixMuscleMass, fixBodyFatMass, lastIndexId);
     }
 
     @Override
     public void retryDeleteGraph(Token token) {
         setNewToken(token);
-
-        presenter.deleteGraph(token.getAccessToken());
+        presenter.deleteGraph(token.getAccessToken(), lastIndexId);
     }
 
     @Override
@@ -244,5 +245,30 @@ public class GraphActivity extends AppCompatActivity implements GraphContract.Vi
         editor.putString("AccessToken", token.getAccessToken());
         editor.putString("RefreshToken", token.getRefreshToken());
         editor.apply();
+    }
+
+    private void setGraph(LineChart lineChart, List<Entry> list, String label) {
+        LineDataSet lineDataSet = new LineDataSet(list, label);
+        LineData lineData = new LineData();
+        lineData.addDataSet(lineDataSet);
+        lineChart.setData(lineData);
+
+        XAxis xAxis = lineChart.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setDrawLabels(false);
+
+        YAxis yLAxis = lineChart.getAxisLeft();
+        yLAxis.setTextColor(Color.BLACK);
+
+        YAxis yRAxis = lineChart.getAxisRight();
+        yRAxis.setDrawLabels(false);
+        yRAxis.setDrawAxisLine(false);
+        yRAxis.setDrawGridLines(false);
+
+        Description description = new Description();
+        description.setText("");
+
+        lineChart.setDescription(description);
+        lineChart.invalidate();
     }
 }

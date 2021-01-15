@@ -1,8 +1,6 @@
 package com.example.muscleup.model.data;
 
-import com.github.mikephil.charting.data.Entry;
-
-public class Graph extends Entry {
+public class Graph {
 
     int id;
     float value;

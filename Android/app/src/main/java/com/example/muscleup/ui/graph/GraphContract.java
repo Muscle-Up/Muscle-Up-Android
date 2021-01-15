@@ -41,9 +41,9 @@ public class GraphContract {
 
         void inputGraph(String token, float weight, float muscleMass, float bodyFatMass);
 
-        void fixGraph(String token, float weight, float muscleMass, float bodyFatMass);
+        void fixGraph(String token, float weight, float muscleMass, float bodyFatMass, int id);
 
-        void deleteGraph(String token);
+        void deleteGraph(String token, int id);
 
         void tokenRefresh(String refreshToken, int errorType);
     }

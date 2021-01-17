@@ -1,4 +1,6 @@
-package com.example.muscleup.ui.changeProfile;
+package com.example.muscleup.ui.editProfile;
+
+import android.net.Uri;
 
 import com.example.muscleup.model.TokenModel;
 import com.example.muscleup.model.UserProfileModel;
@@ -8,6 +10,11 @@ import com.example.muscleup.model.callback.LoadUserInfoListener;
 import com.example.muscleup.model.data.Token;
 import com.example.muscleup.model.data.UserProfile;
 import com.example.muscleup.model.data.UserProfileRequest;
+
+import java.io.File;
+
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 
 public class EditProfilePresenter implements EditProfileContract.Presenter {
 
@@ -47,15 +54,15 @@ public class EditProfilePresenter implements EditProfileContract.Presenter {
 
     @Override
     public void getProfile(String token) {
-        userProfileModel.getUserProfile(token, loadUserInfoListener);
+        userProfileModel.getUserProfile("Bearer " + token, loadUserInfoListener);
     }
 
     @Override
     public void editProfile(
-            String token, String name, int age, String sex, float height, float weight, byte[] image) {
-        userProfileModel.editUserProfile(token,
-                new UserProfileRequest(name, age, sex, height, weight),
-                image, editUserInfoListener);
+            String token, RequestBody name, RequestBody age, RequestBody height, RequestBody weight, MultipartBody.Part image) {
+        userProfileModel.editUserProfile("Bearer " + token,
+                new UserProfileRequest(name, age, height, weight, image),
+                editUserInfoListener);
     }
 
     @Override
@@ -63,7 +70,7 @@ public class EditProfilePresenter implements EditProfileContract.Presenter {
         tokenModel.getNewToken(refreshToken, new LoadTokenListener() {
             @Override
             public void loadToken(Token token) {
-                switch (errorType){
+                switch (errorType) {
                     case UserProfileModel.ERROR_LOAD_PROFILE:
                         view.retryLoadUserProfile(token);
                         break;

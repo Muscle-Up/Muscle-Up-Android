@@ -4,8 +4,8 @@ public class UserProfile {
     private String name;
     private int age;
     private String sex;
-    private float height;
-    private float weight;
+    private int height;
+    private int weight;
     private byte[] image;
 
     public String getName() {
@@ -22,12 +22,12 @@ public class UserProfile {
     }
 
 
-    public float getHeight() {
+    public int getHeight() {
         return height;
     }
 
 
-    public float getWeight() {
+    public int getWeight() {
         return weight;
     }
 

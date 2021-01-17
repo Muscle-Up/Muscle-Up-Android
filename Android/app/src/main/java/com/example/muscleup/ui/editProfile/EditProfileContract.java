@@ -1,7 +1,14 @@
-package com.example.muscleup.ui.changeProfile;
+package com.example.muscleup.ui.editProfile;
+
+import android.net.Uri;
 
 import com.example.muscleup.model.data.Token;
 import com.example.muscleup.model.data.UserProfile;
+
+import java.io.File;
+
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 
 public class EditProfileContract {
     public interface View {
@@ -22,7 +29,7 @@ public class EditProfileContract {
         void getProfile(String token);
 
         void editProfile(
-                String token, String name, int age, String sex, float height, float weight, byte[] image);
+                String token, RequestBody name, RequestBody age, RequestBody height, RequestBody weight, MultipartBody.Part image);
 
         void tokenRefresh(String refreshToken, int errorType);
     }

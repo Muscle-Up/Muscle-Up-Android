@@ -1,5 +1,7 @@
 package com.example.muscleup.model;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.example.muscleup.model.callback.EditUserInfoListener;
@@ -10,6 +12,11 @@ import com.example.muscleup.model.service.UserProfileService;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -37,8 +44,8 @@ public class UserProfileModel {
         call.enqueue(new Callback<UserProfile>() {
             @Override
             public void onResponse(@NonNull Call<UserProfile> call, @NotNull Response<UserProfile> response) {
-                if (!response.isSuccessful()){
-                    if(response.code() == 401) callback.onWrongToken();
+                if (!response.isSuccessful()) {
+                    if (response.code() == 401) callback.onWrongToken();
                     return;
                 }
                 callback.loadUserInfo(response.body());
@@ -51,13 +58,16 @@ public class UserProfileModel {
         });
     }
 
-    public void editUserProfile(String token, UserProfileRequest profile, byte[] image, EditUserInfoListener callback) {
-        Call<Void> call = userProfileService.editUserProfile(token, profile, image);
+    public void editUserProfile(String token, UserProfileRequest profile, EditUserInfoListener callback) {
+
+        Call<Void> call = userProfileService.editUserProfile(token, profile.getName(),profile.getAge(),profile.getHeight(),profile.getWeight(),profile.getImage());
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(@NotNull Call<Void> call, @NotNull Response<Void> response) {
-                if(!response.isSuccessful()){
-                    if(response.code() == 401) callback.onWrongToken();
+                if (!response.isSuccessful()) {
+                    Log.d("UserProfileModel", "onResponse: " + response.code() + response.message());
+                    Log.d("UserProfileModel", "onResponse: " + call.request().header("Authorization") + " / " + call.request().toString());
+                    if (response.code() == 401) callback.onWrongToken();
                     return;
                 }
                 callback.onSuccess();
@@ -65,7 +75,7 @@ public class UserProfileModel {
 
             @Override
             public void onFailure(@NotNull Call<Void> call, @NotNull Throwable t) {
-
+                Log.d("UserProfileModel", "onFailure: "+t.getMessage());
             }
         });
     }

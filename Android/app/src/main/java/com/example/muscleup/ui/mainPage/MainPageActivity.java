@@ -21,7 +21,7 @@ import com.example.muscleup.model.callback.LoadImageListener;
 import com.example.muscleup.model.data.Token;
 import com.example.muscleup.model.data.UserProfile;
 import com.example.muscleup.ui.changePassword.ChangePasswordActivity;
-import com.example.muscleup.ui.changeProfile.EditProfileActivity;
+import com.example.muscleup.ui.editProfile.EditProfileActivity;
 import com.example.muscleup.ui.graph.GraphActivity;
 import com.example.muscleup.ui.login.LoginActivity;
 import com.example.muscleup.ui.main.MainActivity;

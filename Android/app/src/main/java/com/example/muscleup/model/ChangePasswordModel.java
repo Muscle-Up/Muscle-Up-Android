@@ -1,6 +1,7 @@
 package com.example.muscleup.model;
 
 import com.example.muscleup.model.callback.ChangePasswordListener;
+import com.example.muscleup.model.data.ChangePasswordRequest;
 import com.example.muscleup.model.service.ChangePasswordService;
 
 import org.jetbrains.annotations.NotNull;
@@ -26,7 +27,7 @@ public class ChangePasswordModel {
     }
 
     public void changePassword(String token, String password) {
-        Call<Void> call = changePasswordService.changePassword(token, password);
+        Call<Void> call = changePasswordService.changePassword(token, new ChangePasswordRequest(password));
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(@NotNull Call<Void> call, @NotNull Response<Void> response) {

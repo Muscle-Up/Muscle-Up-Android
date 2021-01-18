@@ -1,6 +1,7 @@
 package com.example.muscleup.ui.registerExpert;
 
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,7 +30,7 @@ public class CertificationFragment extends Fragment {
         return binding.getRoot();
     }
 
-    public void setImage(Bitmap bitmap) {
-        binding.certificationIv.setImageBitmap(bitmap);
+    public void setImage(Uri uri) {
+        binding.certificationIv.setImageURI(uri);
     }
 }

@@ -1,5 +1,7 @@
 package com.example.muscleup.model;
 
+import android.util.Log;
+
 import com.example.muscleup.model.callback.LoadMyExpertProfileListener;
 import com.example.muscleup.model.callback.RegisterExpertListener;
 import com.example.muscleup.model.data.ExpertProfile;
@@ -7,6 +9,8 @@ import com.example.muscleup.model.service.ExpertService;
 
 import org.jetbrains.annotations.NotNull;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -45,14 +49,17 @@ public class ExpertModel {
     }
 
     public void registerExpert(
-            String token, String intro, String name, String date,
-            byte[] certificateImage, byte[] image, RegisterExpertListener registerExpertListener) {
-        Call<Void> call = expertService.registerExpert(token, intro, name, date, certificateImage, image);
+            String token, RequestBody intro, RequestBody name, RequestBody date,
+            MultipartBody.Part certificateImage, RegisterExpertListener registerExpertListener) {
+
+        Call<Void> call = expertService.registerExpert(token, intro, name, date, certificateImage);
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(@NotNull Call<Void> call, @NotNull Response<Void> response) {
-                if(!response.isSuccessful()){
-                    if(response.code() == 401) registerExpertListener.onWrongToken();
+                if (!response.isSuccessful()) {
+                    Log.d("ExpertModel", "onResponse: " + response.code()+"/"+response.message());
+                    Log.d("ExpertModel", "onResponse: " + call.request().toString());
+                    if (response.code() == 401) registerExpertListener.onWrongToken();
                     return;
                 }
                 registerExpertListener.onSuccess();
@@ -60,7 +67,7 @@ public class ExpertModel {
 
             @Override
             public void onFailure(@NotNull Call<Void> call, @NotNull Throwable t) {
-
+                Log.d("ExpertModel", "onFailure: " + t.getMessage());
             }
         });
     }

@@ -24,19 +24,19 @@ public class DetailFragment extends Fragment {
 
     public String getIntro() {
         String intro = binding.detailEtIntro.getText().toString();
-        if (intro.length() < 1) return intro;
-        return null;
+        if (intro.length() < 1) return null;
+        return intro;
     }
 
     public String getName() {
         String name = binding.detailEtName.getText().toString();
-        if (name.length() < 1) return name;
-        return null;
+        if (name.length() < 1) return null;
+        return name;
     }
 
     public String getDate() {
         String date = binding.detailEtDate.getText().toString();
-        if (date.length() < 1) return date;
-        return null;
+        if (date.length() < 1) return null;
+        return date;
     }
 }

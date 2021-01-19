@@ -9,6 +9,8 @@ import com.example.muscleup.model.data.Token;
 
 import java.util.List;
 
+import okhttp3.RequestBody;
+
 public class PosePresenter implements PoseContract.Presenter {
 
     private PoseModel poseModel;
@@ -44,8 +46,8 @@ public class PosePresenter implements PoseContract.Presenter {
     }
 
     @Override
-    public void analyzePose(String token, byte[] pose, int position) {
-        poseModel.checkPose(token, pose, position);
+    public void analyzePose(String token, RequestBody pose, int position) {
+        poseModel.checkPose("Bearer " + token, pose, position);
     }
 
     @Override

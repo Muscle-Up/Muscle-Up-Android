@@ -2,22 +2,28 @@ package com.example.muscleup.ui.mainPage;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Gravity;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.loader.content.CursorLoader;
 
 import com.example.muscleup.R;
 import com.example.muscleup.databinding.ActivityMainPageBinding;
 import com.example.muscleup.dialog.CustomDialog;
 import com.example.muscleup.model.callback.CustomDialogListener;
-import com.example.muscleup.model.callback.LoadBodyImageListener;
+import com.example.muscleup.model.callback.LoadPoseImageListener;
 import com.example.muscleup.model.data.Token;
 import com.example.muscleup.model.data.UserProfile;
 import com.example.muscleup.ui.changePassword.ChangePasswordActivity;
@@ -31,9 +37,11 @@ import com.example.muscleup.ui.pose.PoseFragment;
 import com.example.muscleup.ui.registerExpert.RegisterExpertActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.util.Objects;
+import java.io.File;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 
 public class MainPageActivity extends AppCompatActivity implements MainPageContract.View {
 
@@ -42,7 +50,7 @@ public class MainPageActivity extends AppCompatActivity implements MainPageContr
 
     private ActivityMainPageBinding binding;
     private MainPageContract.Presenter presenter;
-    private LoadBodyImageListener loadBodyImageListener;
+    private LoadPoseImageListener loadPoseImageListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,7 +132,7 @@ public class MainPageActivity extends AppCompatActivity implements MainPageContr
 
     @Override
     public void setUserProfile(UserProfile userProfile) {
-        if(userProfile.getImage() != null){
+        if (userProfile.getImage() != null) {
             Bitmap image = BitmapFactory.decodeByteArray(userProfile.getImage(), 0, userProfile.getImage().length);
             binding.mainIvProfile.setImageBitmap(image);
         }
@@ -182,32 +190,43 @@ public class MainPageActivity extends AppCompatActivity implements MainPageContr
         // Todo : 몸변화 리스트 액티비티로 이동하는 코드 추가
     }
 
-    public void getImage(LoadBodyImageListener loadBodyImageListener) {
-        this.loadBodyImageListener = loadBodyImageListener;
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent, 0);
+    public void getImage(LoadPoseImageListener loadPoseImageListener) {
+        this.loadPoseImageListener = loadPoseImageListener;
+        Log.d("MainPageActivity", "getImage: 호출");
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+        startActivityForResult(intent, 123);
+    }
+
+    private String getRealPathFromURI(Uri uri) {
+        String[] proj = {MediaStore.Images.Media.DATA};
+        CursorLoader loader = new CursorLoader(this, uri, proj, null, null, null);
+        Cursor cursor = loader.loadInBackground();
+
+        assert cursor != null;
+        int columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+
+        String result = cursor.getString(columnIndex);
+        cursor.close();
+        return result;
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 0) {
+        if (requestCode == 123) {
             if (resultCode == RESULT_OK) {
                 try {
-                    InputStream in = getContentResolver().openInputStream(Objects.requireNonNull(data.getData()));
+                    assert data != null;
+                    Uri uri = data.getData();
+                    Log.d("MainPageActivity", "onActivityResult: "+uri.toString());
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
+                    File file = new File(getRealPathFromURI(uri));
+                    RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+                    MultipartBody.Part inputImage = MultipartBody.Part.createFormData("image", file.getName(), requestBody);
 
-                    Bitmap img = BitmapFactory.decodeStream(in);
-                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                    img.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                    byte[] image = stream.toByteArray();
-
-                    assert in != null;
-                    in.close();
-
-                    loadBodyImageListener.load(image);
-
+                    loadPoseImageListener.load(requestBody, bitmap);
                 } catch (Exception ignored) {
 
                 }

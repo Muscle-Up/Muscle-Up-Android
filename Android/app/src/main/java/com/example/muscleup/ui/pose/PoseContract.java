@@ -5,6 +5,9 @@ import com.example.muscleup.model.data.Token;
 
 import java.util.List;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+
 public class PoseContract {
     public interface View {
         void setPose(List<Pose> poseList, int position);
@@ -17,7 +20,7 @@ public class PoseContract {
     }
 
     public interface Presenter {
-        void analyzePose(String token, byte[] pose, int position);
+        void analyzePose(String token, RequestBody pose, int position);
 
         void tokenRefresh(String refreshToken);
     }

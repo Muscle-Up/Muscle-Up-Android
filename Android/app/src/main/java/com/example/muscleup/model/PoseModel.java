@@ -1,5 +1,7 @@
 package com.example.muscleup.model;
 
+import android.util.Log;
+
 import com.example.muscleup.model.callback.CheckPoseListener;
 import com.example.muscleup.model.data.Pose;
 import com.example.muscleup.model.service.PoseService;
@@ -8,6 +10,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -28,12 +31,14 @@ public class PoseModel {
         this.checkPoseListener = checkPoseListener;
     }
 
-    public void checkPose(String token, byte[] image, int position) {
+    public void checkPose(String token, RequestBody image, int position) {
         Call<List<Pose>> call = poseService.checkPose(token, image);
         call.enqueue(new Callback<List<Pose>>() {
             @Override
             public void onResponse(@NotNull Call<List<Pose>> call, @NotNull Response<List<Pose>> response) {
                 if (!response.isSuccessful()) {
+                    Log.d("PoseModel", "onResponse: " + response.code());
+                    Log.d("PoseModel", "onResponse: " + call.request().toString());
                     if (response.code() == 401) checkPoseListener.onWrongToken();
                     return;
                 }

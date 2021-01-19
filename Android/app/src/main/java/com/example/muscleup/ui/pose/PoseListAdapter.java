@@ -1,10 +1,11 @@
 package com.example.muscleup.ui.pose;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,9 +20,11 @@ import com.example.muscleup.model.data.KeyPoint;
 import com.example.muscleup.model.data.Pose;
 import com.example.muscleup.model.data.PoseItem;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 
 public class PoseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -56,8 +59,7 @@ public class PoseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof PoseImageViewHolder) {
-            Bitmap bitmap = BitmapFactory.decodeByteArray(imageList.get(position).getImage(),
-                    0, imageList.get(position).getImage().length);
+            Bitmap bitmap = imageList.get(position).getBitmap();
             ((PoseImageViewHolder) holder).item_upload_iv.setImageBitmap(bitmap);
         }
     }
@@ -67,16 +69,19 @@ public class PoseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         return imageList.size();
     }
 
-    public void addImage(byte[] image) {
-        if (getItemCount() < 2) imageList.add(
-                new PoseItem(PoseItem.ITEM_POSE_IMAGE, image));
+    public void addImage(RequestBody image, Bitmap bitmap) {
+        if (getItemCount() < 3) {
+            imageList.add(new PoseItem(PoseItem.ITEM_POSE_IMAGE, image, bitmap));
+            notifyDataSetChanged();
+        }
     }
 
     public void addUploadView() {
         if (isUploadViewExist) return;
 
         isUploadViewExist = true;
-        imageList.add(null);
+        imageList.add(new PoseItem(PoseItem.ITEM_UPLOAD, null, null));
+        notifyDataSetChanged();
     }
 
     public void setPose(List<Pose> poseList, int position) {
@@ -89,8 +94,7 @@ public class PoseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 keyPointList.add(
                         new KeyPoint(keyPointArray[l * 3], keyPointArray[(l * 3) + 1], keyPointArray[(l * 3) + 2]));
             }
-            byte[] byteImage = imageList.get(position).getImage();
-            Bitmap bitmapImage = BitmapFactory.decodeByteArray(byteImage, 0, byteImage.length);
+            Bitmap bitmapImage = imageList.get(position).getBitmap();
             Canvas canvas = new Canvas(bitmapImage);
 
             drawLine(canvas, keyPointList.get(0), keyPointList.get(1));
@@ -113,16 +117,13 @@ public class PoseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             drawLine(canvas, keyPointList.get(15), keyPointList.get(13));
             drawLine(canvas, keyPointList.get(16), keyPointList.get(14));
 
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, stream);
-            byteImage = stream.toByteArray();
-
-            imageList.set(position, new PoseItem(PoseItem.ITEM_POSE_IMAGE, byteImage));
+            imageList.set(position, new PoseItem(PoseItem.ITEM_POSE_IMAGE, null, bitmapImage));
         }
         if (position == 1) onImageAnalyzeSuccessListener.onSuccess();
+        notifyDataSetChanged();
     }
 
-    public byte[] getPose(int position) {
+    public RequestBody getPose(int position) {
         return imageList.get(position).getImage();
     }
 
@@ -140,7 +141,7 @@ public class PoseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         public PoseImageViewHolder(@NonNull View itemView) {
             super(itemView);
-            item_upload_iv = itemView.findViewById(R.id.item_upload_iv);
+            item_upload_iv = itemView.findViewById(R.id.item_pose_iv);
         }
     }
 

@@ -49,10 +49,10 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/pose_cl_statement"
-                android:visibility="invisible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="36dp"
+                android:visibility="invisible"
                 app:layout_constraintLeft_toLeftOf="@id/pose_guideline1"
                 app:layout_constraintRight_toRightOf="@id/pose_guideline2"
                 app:layout_constraintTop_toBottomOf="@id/pose_tv_intro">
@@ -92,9 +92,12 @@
 
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/pose_rv"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_marginVertical="60dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:orientation="horizontal"
                 app:layout_constraintBottom_toTopOf="@id/pose_btn_start"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"

@@ -1,10 +1,14 @@
 package com.example.muscleup.ui.pose;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.core.app.ActivityCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
@@ -19,6 +23,9 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import java.util.Objects;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+
 public class PoseFragment extends Fragment implements PoseContract.View {
 
     private FragmentPoseBinding binding;
@@ -31,11 +38,19 @@ public class PoseFragment extends Fragment implements PoseContract.View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_pose, container, false);
         View view = binding.getRoot();
 
-        adapter = new PoseListAdapter(view1 -> {
-            if (adapter.getItemCount() != 3) return;
-            ((MainPageActivity) Objects.requireNonNull(getActivity())).getImage(image -> adapter.addImage(image));
-        }, () -> {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (Objects.requireNonNull(getActivity()).checkSelfPermission(Manifest.permission.CAMERA) !=
+                    PackageManager.PERMISSION_GRANTED ||
+                    getActivity().checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
+                            PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(getActivity(), new String[]
+                        {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+            }
+        }
+
+        adapter = new PoseListAdapter(view12 -> ((MainPageActivity) Objects.requireNonNull(getActivity())).getImage((image, bitmap) -> adapter.addImage(image, bitmap)), () -> {
             binding.poseTvLoading.setVisibility(View.INVISIBLE);
+            binding.poseBtnStart.setVisibility(View.INVISIBLE);
             binding.poseBtnRestart.setVisibility(View.VISIBLE);
             binding.poseTvInfo.setVisibility(View.INVISIBLE);
             binding.poseClStatement.setVisibility(View.VISIBLE);
@@ -46,10 +61,12 @@ public class PoseFragment extends Fragment implements PoseContract.View {
             binding.poseBtnStart.setVisibility(View.INVISIBLE);
             binding.poseTvLoading.setVisibility(View.VISIBLE);
             for (int i = 0; i < 2; i++) {
+                RequestBody inputImage = adapter.getPose(i);
                 presenter.analyzePose(
-                        ((MainPageActivity) Objects.requireNonNull(getActivity())).getToken(), adapter.getPose(i), i);
+                        ((MainPageActivity) Objects.requireNonNull(getActivity())).getToken(), inputImage, i);
             }
         });
+        binding.poseRv.setAdapter(adapter);
         adapter.addUploadView();
 
         presenter = new PosePresenter(this);
@@ -71,8 +88,9 @@ public class PoseFragment extends Fragment implements PoseContract.View {
     public void retryAnalyzePose(Token token) {
         ((MainPageActivity) Objects.requireNonNull(getActivity())).setNewToken(token);
         for (int i = 0; i < 2; i++) {
+            RequestBody inputImage = adapter.getPose(i);
             presenter.analyzePose(
-                    token.getAccessToken(), adapter.getPose(i), i);
+                    token.getAccessToken(), inputImage, i);
         }
     }
 

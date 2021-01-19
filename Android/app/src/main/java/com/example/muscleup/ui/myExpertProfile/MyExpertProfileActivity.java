@@ -5,12 +5,14 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import com.example.muscleup.R;
 import com.example.muscleup.databinding.ActivityMyExpertProfileBinding;
+import com.example.muscleup.model.ExpertModel;
 import com.example.muscleup.model.data.ExpertProfile;
 import com.example.muscleup.model.data.Token;
 import com.example.muscleup.model.data.UserProfile;
@@ -21,11 +23,13 @@ public class MyExpertProfileActivity extends AppCompatActivity implements MyExpe
     private ActivityMyExpertProfileBinding binding;
     private MyExpertProfileContract.Presenter presenter;
 
+    private String profileImageName;
+    private String certificateImageName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_my_expert_profile);
-        setContentView(R.layout.activity_my_expert_profile);
 
         binding.myExpertBtnBack.setOnClickListener(view -> finish());
 
@@ -36,23 +40,38 @@ public class MyExpertProfileActivity extends AppCompatActivity implements MyExpe
 
     @Override
     public void setMyExpertProfile(ExpertProfile expertProfile) {
-        Bitmap certificateImage = BitmapFactory.decodeByteArray(
-                expertProfile.getCertificateImage(), 0, expertProfile.getCertificateImage().length);
-        Bitmap image = BitmapFactory.decodeByteArray
-                (expertProfile.getUserImage(), 0, expertProfile.getUserImage().length);
-
-        binding.myExpertIvCertificate.setImageBitmap(certificateImage);
-        binding.myExpertIvProfile.setImageBitmap(image);
         binding.myExpertTvIntro.setText(expertProfile.getIntroduction());
+        binding.myExpertTvName.setText(expertProfile.getName() + " 트레이너");
+        binding.myExpertTvAge.setText(String.valueOf(expertProfile.getAge()));
         binding.myExpertTvCertificateName.setText(expertProfile.getCertificateName());
         binding.myExpertTvCertificateDate.setText(expertProfile.getAcquisitionDate());
+
+        profileImageName = expertProfile.getUserImage();
+        certificateImageName = expertProfile.getCertificateImage();
+        presenter.getImage(getToken(), profileImageName, ExpertModel.IMAGE_TYPE_PROFILE);
+        presenter.getImage(getToken(), certificateImageName, ExpertModel.IMAGE_TYPE_CERTIFICATE);
     }
 
     @Override
     public void setUserProfile(UserProfile userProfile) {
-        binding.myExpertTvName.setText(userProfile.getName() + " 트레이너");
-        binding.myExpertTvAge.setText(userProfile.getAge());
-        binding.myExpertTvSex.setText(userProfile.getSex());
+        if(userProfile.getSex().equals("MALE")) binding.myExpertTvSex.setText("남성");
+        else binding.myExpertTvSex.setText("여성");
+    }
+
+    @Override
+    public void setProfileImage(byte[] image) {
+        if (image != null) {
+            Bitmap bitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
+            binding.myExpertIvProfile.setImageBitmap(bitmap);
+        }
+    }
+
+    @Override
+    public void setCertificateImage(byte[] image) {
+        if (image != null) {
+            Bitmap bitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
+            binding.myExpertIvCertificate.setImageBitmap(bitmap);
+        }
     }
 
     @Override
@@ -70,6 +89,13 @@ public class MyExpertProfileActivity extends AppCompatActivity implements MyExpe
     public void retryGetUserProfile(Token token) {
         setNewToken(token);
         presenter.getUserProfile(getToken());
+    }
+
+    @Override
+    public void retryGetImage(Token token) {
+        setNewToken(token);
+        presenter.getImage(getToken(), profileImageName, ExpertModel.IMAGE_TYPE_PROFILE);
+        presenter.getImage(getToken(), certificateImageName, ExpertModel.IMAGE_TYPE_CERTIFICATE);
     }
 
     @Override

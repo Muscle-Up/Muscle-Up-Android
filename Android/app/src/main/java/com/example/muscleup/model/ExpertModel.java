@@ -19,6 +19,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ExpertModel {
 
+    public static final int IMAGE_TYPE_PROFILE = 1000;
+    public static final int IMAGE_TYPE_CERTIFICATE = 1001;
     private ExpertService expertService;
 
     public ExpertModel() {
@@ -35,6 +37,7 @@ public class ExpertModel {
             @Override
             public void onResponse(@NotNull Call<ExpertProfile> call, @NotNull Response<ExpertProfile> response) {
                 if (!response.isSuccessful()) {
+                    Log.d("ExpertModel", "onResponse: "+response.code()+response.message());
                     if (response.code() == 401) loadMyExpertProfileListener.onWrongToken();
                     return;
                 }
@@ -57,7 +60,7 @@ public class ExpertModel {
             @Override
             public void onResponse(@NotNull Call<Void> call, @NotNull Response<Void> response) {
                 if (!response.isSuccessful()) {
-                    Log.d("ExpertModel", "onResponse: " + response.code()+"/"+response.message());
+                    Log.d("ExpertModel", "onResponse: " + response.code() + "/" + response.message());
                     Log.d("ExpertModel", "onResponse: " + call.request().toString());
                     if (response.code() == 401) registerExpertListener.onWrongToken();
                     return;

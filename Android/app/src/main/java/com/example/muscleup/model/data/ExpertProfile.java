@@ -8,8 +8,8 @@ public class ExpertProfile {
     private String type;
     private String certificateName;
     private String acquisitionDate;
-    private byte[] userImage;
-    private byte[] certificateImage;
+    private String userImage;
+    private String certificateImage;
 
     public String getName() {
         return name;
@@ -35,11 +35,11 @@ public class ExpertProfile {
         return acquisitionDate;
     }
 
-    public byte[] getUserImage() {
+    public String getUserImage() {
         return userImage;
     }
 
-    public byte[] getCertificateImage() {
+    public String getCertificateImage() {
         return certificateImage;
     }
 }

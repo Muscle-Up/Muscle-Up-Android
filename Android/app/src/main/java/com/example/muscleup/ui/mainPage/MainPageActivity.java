@@ -17,7 +17,7 @@ import com.example.muscleup.R;
 import com.example.muscleup.databinding.ActivityMainPageBinding;
 import com.example.muscleup.dialog.CustomDialog;
 import com.example.muscleup.model.callback.CustomDialogListener;
-import com.example.muscleup.model.callback.LoadImageListener;
+import com.example.muscleup.model.callback.LoadBodyImageListener;
 import com.example.muscleup.model.data.Token;
 import com.example.muscleup.model.data.UserProfile;
 import com.example.muscleup.ui.changePassword.ChangePasswordActivity;
@@ -42,7 +42,7 @@ public class MainPageActivity extends AppCompatActivity implements MainPageContr
 
     private ActivityMainPageBinding binding;
     private MainPageContract.Presenter presenter;
-    private LoadImageListener loadImageListener;
+    private LoadBodyImageListener loadBodyImageListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -182,8 +182,8 @@ public class MainPageActivity extends AppCompatActivity implements MainPageContr
         // Todo : 몸변화 리스트 액티비티로 이동하는 코드 추가
     }
 
-    public void getImage(LoadImageListener loadImageListener) {
-        this.loadImageListener = loadImageListener;
+    public void getImage(LoadBodyImageListener loadBodyImageListener) {
+        this.loadBodyImageListener = loadBodyImageListener;
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -206,7 +206,7 @@ public class MainPageActivity extends AppCompatActivity implements MainPageContr
                     assert in != null;
                     in.close();
 
-                    loadImageListener.load(image);
+                    loadBodyImageListener.load(image);
 
                 } catch (Exception ignored) {
 

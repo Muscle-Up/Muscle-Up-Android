@@ -10,11 +10,17 @@ public class MyExpertProfileContract {
 
         void setUserProfile(UserProfile userProfile);
 
+        void setProfileImage(byte[] image);
+
+        void setCertificateImage(byte[] image);
+
         void tokenError(int errorType);
 
         void retryGetMyExpertProfile(Token token);
 
         void retryGetUserProfile(Token token);
+
+        void retryGetImage(Token token);
 
         void gotoLogin();
     }
@@ -23,6 +29,8 @@ public class MyExpertProfileContract {
         void getMyExpertProfile(String token);
 
         void getUserProfile(String token);
+
+        void getImage(String token, String imageName, int requestType);
 
         void tokenRefresh(String refreshToken, int errorType);
     }

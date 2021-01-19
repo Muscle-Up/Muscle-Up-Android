@@ -1,5 +1,7 @@
 package com.example.muscleup.model.callback;
 
 public interface LoadImageListener {
-    void load(byte[] image);
+    void onSuccess(byte[] image, int requestType);
+
+    void onWrongToken();
 }

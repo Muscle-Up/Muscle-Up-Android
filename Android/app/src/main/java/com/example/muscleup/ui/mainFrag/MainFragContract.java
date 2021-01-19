@@ -21,6 +21,8 @@ public class MainFragContract {
 
         void setUserProfile(UserProfile userProfile);
 
+        void setImage(byte[] image);
+
         void tokenError(int errorType);
 
         void retryGetGraph(Token token);
@@ -30,6 +32,8 @@ public class MainFragContract {
         void retryGetPostImage(Token token);
 
         void retryGetUserProfile(Token token);
+
+        void retryGetImage(Token token);
 
         void gotoLogin();
     }
@@ -42,6 +46,8 @@ public class MainFragContract {
         void getPostImage(String token, String imageName);
 
         void getUserProfile(String token);
+
+        void getImage(String token, String imageName);
 
         void tokenRefresh(String refreshToken, int errorType);
     }

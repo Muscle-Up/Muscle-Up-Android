@@ -7,9 +7,13 @@ public class MainPageContract {
     public interface View {
         void setUserProfile(UserProfile userProfile);
 
-        void tokenError();
+        void setImage(byte[] image);
+
+        void tokenError(int errorType);
 
         void retryGetUserProfile(Token token);
+
+        void retryGetImage(Token token);
 
         void gotoLogin();
     }
@@ -17,6 +21,8 @@ public class MainPageContract {
     public interface Presenter {
         void getUserProfile(String token);
 
-        void tokenRefresh(String refreshToken);
+        void getImage(String token, String imageName);
+
+        void tokenRefresh(String refreshToken, int errorType);
     }
 }

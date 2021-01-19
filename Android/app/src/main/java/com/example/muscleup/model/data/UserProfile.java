@@ -6,7 +6,7 @@ public class UserProfile {
     private String sex;
     private int height;
     private int weight;
-    private byte[] image;
+    private String image;
 
     public String getName() {
         return name;
@@ -32,7 +32,7 @@ public class UserProfile {
     }
 
 
-    public byte[] getImage() {
+    public String getImage() {
         return image;
     }
 }

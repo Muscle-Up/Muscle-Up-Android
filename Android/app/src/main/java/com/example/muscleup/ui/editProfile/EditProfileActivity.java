@@ -1,10 +1,13 @@
 package com.example.muscleup.ui.editProfile;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -24,6 +27,7 @@ import com.example.muscleup.model.data.Token;
 import com.example.muscleup.model.data.UserProfile;
 import com.example.muscleup.ui.main.MainActivity;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.nio.charset.StandardCharsets;
 
@@ -41,6 +45,8 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
     private RequestBody inputHeight;
     private RequestBody inputWeight;
     private MultipartBody.Part inputImage = null;
+
+    private String profileImageName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,11 +76,6 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
             inputAge = createPartFormString(binding.editProfileEtAge.getText().toString());
             inputHeight = createPartFormString(binding.editProfileEtHeight.getText().toString());
             inputWeight = createPartFormString(binding.editProfileEtWeight.getText().toString());
-
-            /*inputName = binding.editProfileEtName.getText().toString();
-            inputAge = Integer.parseInt(binding.editProfileEtAge.getText().toString());
-            inputHeight = Integer.parseInt(binding.editProfileEtHeight.getText().toString());
-            inputWeight = Integer.parseInt(binding.editProfileEtWeight.getText().toString());*/
 
             if (binding.editProfileEtName.getText().toString().length() < 1) return;
             if (binding.editProfileEtAge.getText().toString().length() < 1) return;
@@ -120,17 +121,29 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
         int age = userProfile.getAge();
         int height = userProfile.getHeight();
         int weight = userProfile.getWeight();
+        profileImageName = userProfile.getImage();
 
         binding.editProfileEtName.setText(name);
         binding.editProfileEtAge.setText(String.valueOf(age));
         binding.editProfileEtHeight.setText(String.valueOf(height));
         binding.editProfileEtWeight.setText(String.valueOf(weight));
 
-        if (userProfile.getImage() != null) {
-            Uri uri = Uri.parse(new String(userProfile.getImage(), StandardCharsets.UTF_8));
-            binding.editProfileIv.setImageURI(uri);
-            inputImage = prepareFilePart(uri);
+        presenter.getImage(getAccessToken(), profileImageName);
+    }
+
+    @Override
+    public void setImage(byte[] image) {
+        if (image != null) {
+            Bitmap bitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
+            binding.editProfileIv.setImageBitmap(bitmap);
+            inputImage = prepareFilePart(getImageUriFromBitmap(this, bitmap));
         }
+    }
+
+    private Uri getImageUriFromBitmap(Context context, Bitmap bitmap) {
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, new ByteArrayOutputStream());
+        String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), bitmap, "curProfileImage", "");
+        return Uri.parse(path);
     }
 
     private RequestBody createPartFormString(String text) {
@@ -172,6 +185,12 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
     public void retryLoadUserProfile(Token token) {
         setNewToken(token);
         presenter.getProfile(token.getAccessToken());
+    }
+
+    @Override
+    public void retryGetImage(Token token) {
+        setNewToken(token);
+        presenter.getImage(getAccessToken(), profileImageName);
     }
 
     @Override

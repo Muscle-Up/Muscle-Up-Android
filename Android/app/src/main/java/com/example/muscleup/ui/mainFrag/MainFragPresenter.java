@@ -2,11 +2,13 @@ package com.example.muscleup.ui.mainFrag;
 
 import com.example.muscleup.model.BodyPostModel;
 import com.example.muscleup.model.GraphModel;
+import com.example.muscleup.model.ImageModel;
 import com.example.muscleup.model.TokenModel;
 import com.example.muscleup.model.UserProfileModel;
 import com.example.muscleup.model.callback.LoadBodyPostImageListener;
 import com.example.muscleup.model.callback.LoadBodyPostListener;
 import com.example.muscleup.model.callback.LoadGraphListener;
+import com.example.muscleup.model.callback.LoadImageListener;
 import com.example.muscleup.model.callback.LoadTokenListener;
 import com.example.muscleup.model.callback.LoadUserInfoListener;
 import com.example.muscleup.model.data.BodyPost;
@@ -22,11 +24,13 @@ public class MainFragPresenter implements MainFragContract.Presenter {
     public static final int ERROR_GET_POST = 1;
     public static final int ERROR_GET_POST_IMAGE = 2;
     public static final int ERROR_GET_USER_PROFILE = 3;
+    public static final int ERROR_GET_IMAGE = 4;
 
     private GraphModel graphModel;
     private TokenModel tokenModel;
     private BodyPostModel bodyPostModel;
     private UserProfileModel userProfileModel;
+    private ImageModel imageModel;
     private MainFragContract.View view;
 
     private LoadGraphListener loadGraphListener = new LoadGraphListener() {
@@ -60,6 +64,7 @@ public class MainFragPresenter implements MainFragContract.Presenter {
         tokenModel = new TokenModel();
         bodyPostModel = new BodyPostModel();
         userProfileModel = new UserProfileModel();
+        imageModel = new ImageModel();
         this.view = view;
     }
 
@@ -116,6 +121,21 @@ public class MainFragPresenter implements MainFragContract.Presenter {
     }
 
     @Override
+    public void getImage(String token, String imageName) {
+        imageModel.getImage("Bearer " + token, imageName, 0, new LoadImageListener() {
+            @Override
+            public void onSuccess(byte[] image, int requestType) {
+                view.setImage(image);
+            }
+
+            @Override
+            public void onWrongToken() {
+                view.tokenError(ERROR_GET_IMAGE);
+            }
+        });
+    }
+
+    @Override
     public void tokenRefresh(String refreshToken, int errorType) {
         tokenModel.getNewToken(refreshToken, new LoadTokenListener() {
             @Override
@@ -135,6 +155,10 @@ public class MainFragPresenter implements MainFragContract.Presenter {
 
                     case ERROR_GET_USER_PROFILE:
                         view.retryGetUserProfile(token);
+                        break;
+
+                    case ERROR_GET_IMAGE:
+                        view.retryGetImage(token);
                         break;
                 }
             }

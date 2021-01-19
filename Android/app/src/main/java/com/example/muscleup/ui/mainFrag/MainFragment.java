@@ -46,6 +46,7 @@ public class MainFragment extends Fragment implements MainFragContract.View {
     private MainFragContract.Presenter presenter;
 
     private String bodyPostImageName;
+    private String profileImageName;
     private int curGraph;
 
     @Override
@@ -153,11 +154,18 @@ public class MainFragment extends Fragment implements MainFragContract.View {
 
     @Override
     public void setUserProfile(UserProfile userProfile) {
-        if (userProfile.getImage() != null) {
-            Bitmap image = BitmapFactory.decodeByteArray(userProfile.getImage(), 0, userProfile.getImage().length);
-            binding.mainPageIvProfile.setImageBitmap(image);
-        }
+        profileImageName = userProfile.getName();
+        presenter.getImage(
+                ((MainPageActivity) Objects.requireNonNull(getActivity())).getToken(), profileImageName);
         setGreetMessage(userProfile.getName());
+    }
+
+    @Override
+    public void setImage(byte[] image) {
+        if (image != null) {
+            Bitmap bitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
+            binding.mainPageIvProfile.setImageBitmap(bitmap);
+        }
     }
 
     @Override
@@ -188,6 +196,13 @@ public class MainFragment extends Fragment implements MainFragContract.View {
     public void retryGetUserProfile(Token token) {
         ((MainPageActivity) Objects.requireNonNull(getActivity())).setNewToken(token);
         presenter.getUserProfile(token.getAccessToken());
+    }
+
+    @Override
+    public void retryGetImage(Token token) {
+        ((MainPageActivity) Objects.requireNonNull(getActivity())).setNewToken(token);
+        presenter.getImage(
+                ((MainPageActivity) Objects.requireNonNull(getActivity())).getToken(), profileImageName);
     }
 
     @Override

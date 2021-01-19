@@ -52,6 +52,8 @@ public class MainPageActivity extends AppCompatActivity implements MainPageContr
     private MainPageContract.Presenter presenter;
     private LoadPoseImageListener loadPoseImageListener;
 
+    private String profileImageName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -132,24 +134,36 @@ public class MainPageActivity extends AppCompatActivity implements MainPageContr
 
     @Override
     public void setUserProfile(UserProfile userProfile) {
-        if (userProfile.getImage() != null) {
-            Bitmap image = BitmapFactory.decodeByteArray(userProfile.getImage(), 0, userProfile.getImage().length);
-            binding.mainIvProfile.setImageBitmap(image);
-        }
-
+        profileImageName = userProfile.getImage();
         String name = userProfile.getName() + " 님";
+
         binding.mainTvName.setText(name);
+        presenter.getImage(getToken(), profileImageName);
     }
 
     @Override
-    public void tokenError() {
-        presenter.tokenRefresh(getRefreshToken());
+    public void setImage(byte[] image) {
+        if (image != null) {
+            Bitmap bitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
+            binding.mainIvProfile.setImageBitmap(bitmap);
+        }
+    }
+
+    @Override
+    public void tokenError(int errorType) {
+        presenter.tokenRefresh(getRefreshToken(), errorType);
     }
 
     @Override
     public void retryGetUserProfile(Token token) {
         setNewToken(token);
         presenter.getUserProfile(getToken());
+    }
+
+    @Override
+    public void retryGetImage(Token token) {
+        setNewToken(token);
+        presenter.getImage(getToken(), profileImageName);
     }
 
     @Override
@@ -220,7 +234,7 @@ public class MainPageActivity extends AppCompatActivity implements MainPageContr
                 try {
                     assert data != null;
                     Uri uri = data.getData();
-                    Log.d("MainPageActivity", "onActivityResult: "+uri.toString());
+                    Log.d("MainPageActivity", "onActivityResult: " + uri.toString());
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
                     File file = new File(getRealPathFromURI(uri));
                     RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);

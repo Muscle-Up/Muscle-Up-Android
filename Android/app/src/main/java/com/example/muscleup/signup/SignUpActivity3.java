@@ -3,10 +3,7 @@ package com.example.muscleup.signup;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.Matrix;
-import android.media.ExifInterface;
+
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -25,7 +22,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 import com.example.muscleup.R;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -33,26 +29,23 @@ import java.util.Date;
 
 public class SignUpActivity3 extends AppCompatActivity {
     final private String TAG = "MuscleUp";
-    ImageButton btn_camera;
-    ImageView iv_profile;
+    ImageButton cameraButton;
+    ImageView profileImage;
 
     private String imageFilePath;
     private Uri photoUri, imageUri = null;
 
     private static final int REQUEST_IMAGE_CAPTURE = 100;
     private static final int REQUEST_ALBUM = 101;
-    private static final int REQUEST_IMAGE_CROP = 102;
-
-    boolean isAlbum = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up3);
 
-        iv_profile = findViewById(R.id.set_profile_picture);
-        btn_camera = findViewById(R.id.camera_button);
-        btn_camera.setOnClickListener(new View.OnClickListener() {
+        profileImage = findViewById(R.id.set_profile_picture);
+        cameraButton = findViewById(R.id.camera_button);
+        cameraButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -119,7 +112,6 @@ public class SignUpActivity3 extends AppCompatActivity {
             }
 
             if (photoFile != null) {
-                //photoUri = Uri.fromFile(photoFile); // 임시 파일의 위치, 경로
                 photoUri = FileProvider.getUriForFile(this, getPackageName(), photoFile);
 
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
@@ -132,7 +124,6 @@ public class SignUpActivity3 extends AppCompatActivity {
     //앨범 호출
     public void getAlbum() {
         Intent intent = new Intent( Intent.ACTION_PICK );
-        //intent.setType("image/*");
         intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
         startActivityForResult( intent, REQUEST_ALBUM);
     }
@@ -159,21 +150,21 @@ public class SignUpActivity3 extends AppCompatActivity {
             switch (requestCode) {
                 case REQUEST_ALBUM: // 앨범
                     imageUri = data.getData();
-                    iv_profile.setImageURI(imageUri);
+                    profileImage.setImageURI(imageUri);
                     break;
                 case REQUEST_IMAGE_CAPTURE:     // 카메라
-                    iv_profile.setImageURI(photoUri);
+                    profileImage.setImageURI(photoUri);
                     imageUri = photoUri;
                     break;
             }
         }
     }
 
-    public void backButton_Click(View view) {
+    public void onBackButtonClick(View view) {
         this.finish();
     }
 
-    public void nextButtonInSignUp3Click(View view) {
+    public void onNextButtonInSignUp3Click(View view) {
         Intent intent = getIntent();
         String name = intent.getStringExtra("name");
         int age = intent.getIntExtra("age", 0);

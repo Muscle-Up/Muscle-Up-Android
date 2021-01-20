@@ -10,7 +10,6 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import retrofit2.Call;
@@ -28,10 +27,9 @@ public class SignUpActivity4 extends AppCompatActivity {
 
     private  ApiService apiService;
 
-    EditText email_editText;
-    EditText password_editText;
-    EditText password_check;
-    ImageView imageView;
+    EditText emailEditText;
+    EditText passwordEditText;
+    EditText passwordCheck;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,11 +37,9 @@ public class SignUpActivity4 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up4);
 
-        email_editText = findViewById(R.id.email_editText);
-        password_editText = findViewById(R.id.password_editText);
-        password_check = findViewById(R.id.check_password_editText);
-
-        imageView = findViewById(R.id.uiui);
+        emailEditText = findViewById(R.id.email_editText);
+        passwordEditText = findViewById(R.id.password_editText);
+        passwordCheck = findViewById(R.id.check_password_editText);
 
         apiService = ApiUtils.getAPIService();
 
@@ -51,8 +47,8 @@ public class SignUpActivity4 extends AppCompatActivity {
 
    private void createPost() {
 
-        String email = email_editText.getText().toString();
-        String password = password_editText.getText().toString();
+        String email = emailEditText.getText().toString();
+        String password = passwordEditText.getText().toString();
         Sex sex;
 
         Intent intent = getIntent();
@@ -78,8 +74,6 @@ public class SignUpActivity4 extends AppCompatActivity {
             bitImage.compress(Bitmap.CompressFormat.JPEG, 70, byteArray);
             image = byteArray.toByteArray();
         }
-
-        imageView.setImageBitmap(bitImage);
 
        Call<Void> call = apiService.register(name, age, sex, height, weight, email, password, image);
 
@@ -116,11 +110,11 @@ public class SignUpActivity4 extends AppCompatActivity {
        return bitmap;
    }
 
-    public void backButton_Click(View view) {
+    public void onBackButtonClick(View view) {
         this.finish();
     }
 
-    public void finishButton_Click(View view)  {
+    public void onFinishButtonClick(View view)  {
         if ( checkValidInput() == false ) return;
 
         createPost();
@@ -131,9 +125,9 @@ public class SignUpActivity4 extends AppCompatActivity {
 
     private boolean checkValidInput()
     {
-        if ( email_editText.length() == 0 )
+        if ( emailEditText.length() == 0 )
         {
-            email_editText.setError("이메일을 입력하십시오.");
+            emailEditText.setError("이메일을 입력하십시오.");
             return false;
         }
 
@@ -145,7 +139,7 @@ public class SignUpActivity4 extends AppCompatActivity {
                         "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
                         ")+"
         );
-        Matcher m = p.matcher(email_editText.getText().toString());
+        Matcher m = p.matcher(emailEditText.getText().toString());
 
         if(!m.matches()) {
             Toast.makeText(this, "Email 형식으로 입력하세요", Toast.LENGTH_SHORT).show();
@@ -154,16 +148,16 @@ public class SignUpActivity4 extends AppCompatActivity {
 
 
         //  암호 입력 검사
-        if ( password_editText.length() == 0 )
+        if ( passwordEditText.length() == 0 )
         {
-            password_editText.setError("비밀번호를 입력하십시오.");
+            passwordEditText.setError("비밀번호를 입력하십시오.");
             return false;
         }
 
         // 암호 일치 검사
 
-        if(!password_editText.getText().toString().equals(password_check.getText().toString())) {
-            password_check.setError("비밀번호가 일치하지 않습니다.");
+        if(!passwordEditText.getText().toString().equals(passwordCheck.getText().toString())) {
+            passwordCheck.setError("비밀번호가 일치하지 않습니다.");
             return false;
         }
 

@@ -11,23 +11,23 @@ import com.example.muscleup.R;
 
 public class SignUpActivity2 extends AppCompatActivity {
 
-    EditText height_editText;
-    EditText weight_editText;
+    private EditText heightEditText;
+    private EditText weightEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up2);
 
-        height_editText = findViewById(R.id.height_editText);
-        weight_editText = findViewById(R.id.weight_editText);
+        heightEditText = findViewById(R.id.height_editText);
+        weightEditText = findViewById(R.id.weight_editText);
     }
 
-
-    public void backButton_Click(View view) {
+    public void onBackButtonClick(View view) {
         this.finish();
     }
-    public void nextButton_Click(View view) {
+
+    public void onNextButtonInSignUp2Click(View view) {
         if ( checkValidInput() == false ) return;
 
         Intent intent = getIntent();
@@ -35,8 +35,8 @@ public class SignUpActivity2 extends AppCompatActivity {
         int age = intent.getIntExtra("age", 0);
         String sex = intent.getStringExtra("sex");
 
-        String height = height_editText.getText().toString();
-        String weight = weight_editText.getText().toString();
+        String height = heightEditText.getText().toString();
+        String weight = weightEditText.getText().toString();
 
         Intent intent3 = new Intent(this, SignUpActivity3.class);
         intent3.putExtra("name", name);
@@ -58,11 +58,11 @@ public class SignUpActivity2 extends AppCompatActivity {
 
     private boolean checkValidInput()
     {
-        if  ( height_editText.getText().toString().trim().equals("") )
-            height_editText.setText( "" );
+        if  ( heightEditText.getText().toString().trim().equals("") )
+            heightEditText.setText( "" );
 
-        if  ( weight_editText.getText().toString().trim().equals("") )
-            weight_editText.setText( "" );
+        if  ( weightEditText.getText().toString().trim().equals("") )
+            weightEditText.setText( "" );
 
         return true;
     }

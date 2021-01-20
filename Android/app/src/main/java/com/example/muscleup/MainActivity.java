@@ -8,6 +8,7 @@ import android.view.View;
 
 import com.example.muscleup.signup.SignUpActivity;
 
+
 public class MainActivity extends AppCompatActivity {
 
     @Override

@@ -131,6 +131,5 @@
             app:layout_constraintLeft_toLeftOf="@id/login_guideline1"
             app:layout_constraintRight_toRightOf="@id/login_guideline2" />
 
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SignUpActivity3">
+    tools:context=".signup.SignUpActivity3">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline3"
@@ -27,108 +27,62 @@
         android:layout_marginTop="99dp"
         android:text="회원가입"
         android:textColor="#000000"
-        android:textSize="24sp"
+        android:textSize="24dp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/id_textView"
+        android:id="@+id/profile_picture_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
-        android:text="아이디"
+        android:layout_marginTop="16dp"
+        android:text="프로필 사진 설정하기"
         android:textColor="#000000"
-        android:textSize="10dp"
-        app:layout_constraintStart_toStartOf="@+id/guideline3"
-        app:layout_constraintTop_toBottomOf="@+id/signUp_textView" />
-
-    <TextView
-        android:id="@+id/password_textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:text="비밀번호"
-        android:textColor="#000000"
-        android:textSize="10dp"
-        app:layout_constraintStart_toStartOf="@+id/guideline3"
-        app:layout_constraintTop_toBottomOf="@+id/id_editText" />
-
-    <TextView
-        android:id="@+id/check_password_textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:text="비밀번호 확인"
-        android:textColor="#000000"
-        android:textSize="10dp"
-        app:layout_constraintStart_toStartOf="@+id/guideline3"
-        app:layout_constraintTop_toBottomOf="@+id/password_editText" />
-
-    <EditText
-        android:id="@+id/id_editText"
-        android:layout_width="280dp"
-        android:layout_height="36dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/edittext_layout"
-        android:digits="0123456789"
-        android:hint="  이메일 주소"
-        android:inputType="textPersonName"
+        android:textSize="15dp"
         app:layout_constraintEnd_toStartOf="@+id/guideline4"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
-        app:layout_constraintTop_toBottomOf="@+id/id_textView" />
+        app:layout_constraintTop_toBottomOf="@+id/set_profile_picture" />
 
-    <EditText
-        android:id="@+id/password_editText"
-        android:layout_width="280dp"
-        android:layout_height="36dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/edittext_layout"
-        android:digits="0123456789"
-        android:hint="  비밀번호를 입력해주세요"
-        android:inputType="textPersonName"
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/set_profile_picture"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:src="@drawable/set_profile_picture"
+        app:civ_border_color="#00000000"
+        app:civ_border_width="2dp"
+        android:layout_marginTop="62dp"
         app:layout_constraintEnd_toStartOf="@+id/guideline4"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
-        app:layout_constraintTop_toBottomOf="@+id/password_textView" />
-
-    <EditText
-        android:id="@+id/check_password_editText"
-        android:layout_width="280dp"
-        android:layout_height="36dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/edittext_layout"
-        android:digits="0123456789"
-        android:hint="  비밀번호를 확인해주세요"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toStartOf="@+id/guideline4"
-        app:layout_constraintStart_toStartOf="@+id/guideline3"
-        app:layout_constraintTop_toBottomOf="@+id/check_password_textView" />
+        app:layout_constraintTop_toBottomOf="@+id/signUp_textView"
+        tools:layout_editor_absoluteX="170dp"
+        tools:layout_editor_absoluteY="214dp" />
 
     <Button
-        android:id="@+id/finish_button"
+        android:id="@+id/next_button3"
         android:layout_width="280dp"
         android:layout_height="36dp"
-        android:layout_marginTop="53dp"
+        android:layout_marginTop="138dp"
         android:background="@drawable/signup_button_layout"
-        android:onClick="finishButton_Click"
+        android:onClick="onNextButtonInSignUp3Click"
         android:text="다음"
         android:textColor="#FFFFFF"
         app:layout_constraintEnd_toStartOf="@+id/guideline4"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
-        app:layout_constraintTop_toBottomOf="@+id/check_password_editText" />
+        app:layout_constraintTop_toBottomOf="@+id/profile_picture_textView" />
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/page3_imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="95dp"
+        android:layout_marginTop="75dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/finish_button"
-        app:srcCompat="@drawable/page_1" />
+        app:layout_constraintTop_toBottomOf="@+id/next_button3"
+        app:srcCompat="@drawable/page_3" />
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/back_button3"
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:layout_marginStart="30dp"
@@ -136,9 +90,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_baseline_arrow_back_ios_24"
-        android:onClick="backButton_Click"
-        android:layout_marginLeft="30dp"
-        tools:ignore="VectorDrawableCompat" />
+        android:onClick="onBackButtonClick" />
+
+    <ImageButton
+        android:id="@+id/camera_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="185dp"
+        android:layout_marginTop="280dp"
+        android:background="@android:color/transparent"
+        app:layout_constraintStart_toStartOf="@+id/guideline3"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/camera_button" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

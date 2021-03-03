@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SignUpActivity2">
+    tools:context=".signup.SignUpActivity2">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline3"
@@ -71,8 +71,9 @@
         android:layout_marginTop="10dp"
         android:background="@drawable/edittext_layout"
         android:digits="0123456789"
-        android:hint="  이름을 입력해주세요"
+        android:hint="  키를 입력해주세요"
         android:inputType="textPersonName"
+        android:maxLength="3"
         app:layout_constraintEnd_toStartOf="@+id/guideline4"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
         app:layout_constraintTop_toBottomOf="@+id/height_textView" />
@@ -84,38 +85,39 @@
         android:layout_marginTop="10dp"
         android:background="@drawable/edittext_layout"
         android:digits="0123456789"
-        android:hint="  나이를 입력해주세요"
+        android:hint="  몸무게를 입력해주세요"
         android:inputType="textPersonName"
+        android:maxLength="3"
         app:layout_constraintEnd_toStartOf="@+id/guideline4"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
         app:layout_constraintTop_toBottomOf="@+id/weight_textView" />
 
     <Button
-        android:id="@+id/next_button"
+        android:id="@+id/next_button2"
         android:layout_width="280dp"
         android:layout_height="36dp"
         android:layout_marginTop="100dp"
         android:background="@drawable/signup_button_layout"
         android:gravity="center"
-        android:onClick="nextButton_Click"
+        android:onClick="onNextButtonInSignUp2Click"
         android:text="다음"
         android:textColor="#FFFFFF"
         app:layout_constraintEnd_toStartOf="@+id/guideline4"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
-        app:layout_constraintTop_toBottomOf="@+id/weight_editText" />
+        app:layout_constraintTop_toBottomOf="@+id/weight_textView" />
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/page2_imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="93dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/next_button"
+        app:layout_constraintTop_toBottomOf="@+id/next_button2"
         app:srcCompat="@drawable/page_2" />
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/back_button2"
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:layout_marginStart="30dp"
@@ -123,9 +125,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_baseline_arrow_back_ios_24"
-        android:onClick="backButton_Click"
-        android:layout_marginLeft="30dp"
-        tools:ignore="VectorDrawableCompat" />
-
+        android:onClick="onBackButtonClick" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

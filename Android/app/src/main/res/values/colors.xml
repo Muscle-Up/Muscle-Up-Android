@@ -8,4 +8,5 @@
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorGray">#F6F6F6</color>
     <color name="colorLightGray">#B7B7B7</color>
+    <color name="colorRadioButton">#F05237</color>
 </resources>

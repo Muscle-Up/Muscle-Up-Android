@@ -6,8 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.example.muscleup.ui.login.LoginActivity;
-
 public class FindPasswordActivity extends AppCompatActivity {
 
     @Override

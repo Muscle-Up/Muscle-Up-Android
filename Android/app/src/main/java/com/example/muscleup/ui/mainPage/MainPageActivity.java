@@ -26,6 +26,7 @@ import com.example.muscleup.ui.graph.GraphActivity;
 import com.example.muscleup.ui.login.LoginActivity;
 import com.example.muscleup.ui.main.MainActivity;
 import com.example.muscleup.ui.mainFrag.MainFragment;
+import com.example.muscleup.ui.messenger.fragment.MessengerFragment;
 import com.example.muscleup.ui.pose.PoseFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -37,7 +38,7 @@ public class MainPageActivity extends AppCompatActivity implements MainPageContr
 
     private MainFragment mainPageFragment = new MainFragment();
     private PoseFragment poseFragment = new PoseFragment();
-
+    private MessengerFragment messengerFragment = new MessengerFragment();
     private ActivityMainPageBinding binding;
     private MainPageContract.Presenter presenter;
     private LoadImageListener loadImageListener;
@@ -62,12 +63,11 @@ public class MainPageActivity extends AppCompatActivity implements MainPageContr
 
                 case R.id.menu_qna:
                     binding.mainDl.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-                    //Todo : QnA Fragment 로 이동하는 코드 추가
+                    changeFragment(messengerFragment);
                     break;
 
                 case R.id.menu_messenger:
                     binding.mainDl.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-                    //Todo : Messenger Fragment 로 이동하는 코드 추가
                     break;
             }
             return true;

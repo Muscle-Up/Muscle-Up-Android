@@ -1,11 +1,11 @@
-package com.example.muscleup.qna
+package com.example.muscleup.ui.qna
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.muscleup.R
-import com.example.muscleup.qna.model.QnA
+import com.example.muscleup.ui.qna.model.QnA
 
 class QnaAdapter(private val qnas : List<QnA>) : RecyclerView.Adapter<QnaAdapter.ViewHolder>(){
 

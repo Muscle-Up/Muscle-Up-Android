@@ -1,4 +1,4 @@
-package com.example.muscleup.qna
+package com.example.muscleup.ui.qna
 
 //import androidx.recyclerview.widget.RecyclerView
 //

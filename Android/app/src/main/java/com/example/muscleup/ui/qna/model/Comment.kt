@@ -1,4 +1,4 @@
-package com.example.muscleup.qna.model
+package com.example.muscleup.ui.qna.model
 
 data class Comment(val commentId : Int,
                    val content : String,

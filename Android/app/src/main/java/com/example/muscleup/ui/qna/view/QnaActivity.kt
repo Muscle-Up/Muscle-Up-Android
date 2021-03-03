@@ -1,4 +1,4 @@
-package com.example.muscleup.qna.view
+package com.example.muscleup.ui.qna.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

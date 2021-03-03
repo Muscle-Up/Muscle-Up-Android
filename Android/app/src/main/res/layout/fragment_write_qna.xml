@@ -4,7 +4,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".qna.view.WriteQnaFragment">
+        tools:context=".ui.qna.view.WriteQnaFragment">
 
     <ImageButton
             android:id="@+id/qna_detail_back_btn"

@@ -29,14 +29,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.signup.SignUpActivity"/>
+        <activity android:name=".ui.signup.SignUpActivity2"/>
+        <activity android:name=".ui.signup.SignUpActivity3"/>
+        <activity android:name=".ui.signup.SignUpActivity4"/>
         <activity android:name=".ui.graph.GraphActivity" />
         <activity android:name=".ui.login.LoginActivity" />
         <activity android:name=".FindPasswordActivity" />
-        <activity android:name=".qna.view.QnaActivity" />
-        <activity android:name=".ui.login.LoginActivity" />
-        <activity android:name=".SignUpActivity" />
-        <activity android:name=".SignUpActivity2" />
-        <activity android:name=".SignUpActivity3" />
         <activity android:name=".ui.qna.view.QnaActivity" />
         <activity android:name=".ui.mainPage.MainPageActivity" />
     </application>

@@ -12,6 +12,7 @@ import com.example.muscleup.databinding.ActivityMainBinding;
 import com.example.muscleup.model.data.Token;
 import com.example.muscleup.ui.login.LoginActivity;
 import com.example.muscleup.ui.mainPage.MainPageActivity;
+import com.example.muscleup.ui.signup.SignUpActivity;
 
 public class MainActivity extends AppCompatActivity implements MainContract.View {
 

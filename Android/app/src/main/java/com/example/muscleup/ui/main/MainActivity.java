@@ -8,13 +8,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import com.example.muscleup.R;
-import com.example.muscleup.SignUpActivity;
-import com.example.muscleup.databinding.ActivityLoginBinding;
 import com.example.muscleup.databinding.ActivityMainBinding;
-import com.example.muscleup.databinding.ActivityMainPageBinding;
 import com.example.muscleup.model.data.Token;
 import com.example.muscleup.ui.login.LoginActivity;
-import com.example.muscleup.ui.login.LoginPresenter;
 import com.example.muscleup.ui.mainPage.MainPageActivity;
 
 public class MainActivity extends AppCompatActivity implements MainContract.View {
